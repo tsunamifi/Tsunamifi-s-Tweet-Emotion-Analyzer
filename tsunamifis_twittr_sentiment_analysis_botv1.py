@@ -25,6 +25,7 @@ Why? for fun, probably.
 #pip install textblob
 
 ##importing things here!
+import streamlit as st
 ### pandas helps us visualize and sort data, we'll need it if you want to see results.
 import pandas as pd
 
@@ -41,6 +42,8 @@ from textblob import TextBlob
 
 ### display is so we can display a dataframe from pandas or something else.
 from IPython.display import display
+
+st.set_page_config(layout="wide")
 
 # defining twitter auth setup here!
 def auth():
