@@ -142,7 +142,3 @@ display(df)
 
 """# **Actually run the Analysis!**"""
 
-## preparing for lift off..
-
-    # calling main function
-main()
