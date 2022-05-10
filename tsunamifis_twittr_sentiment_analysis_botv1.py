@@ -44,6 +44,8 @@ from textblob import TextBlob
 from IPython.display import display
 
 st.set_page_config(layout="wide")
+st.title("Tsunamifi's Twitter Sentiment Analysis Bot")
+st.write("This WebAPP will allow you to plug in a topic from twitter and determine if their tweets are Positive, Negative or Neutral.")
 
 # defining twitter auth setup here!
 def auth():
@@ -110,17 +112,19 @@ def fetch_tweets(query, count = 50):
       print("Error : " + str(e))
       exit(1)
 
-#@title #Choose Topic or User to analyze { display-mode: "form" }
-#@markdown You're welcome to use both a user and topic but both at the same time are not required, you can use one or the other too if you'd like.
+st.title("Choose Topic or User to analyze")
+st.write("You're welcome to use both a user and topic but both at the same time are not required, you can use one or the other too if you'd like.")
 
 
 # Take off...
-User = "" #@param {type:"string"} 
-Topic = "trump" #@param {type: "string"}
-How_Many_Tweets =  200#@param {type:"number"}
 
 
-tweets = fetch_tweets(query = Topic, count = 200)
+with st.form(key='topic):
+	text_input = st.text_input(label='Choose topic')
+    number_input = st.number_input(label= 'How many tweets should we source?')
+	submit_button = st.form_submit_button(label='Submit')
+
+tweets = fetch_tweets(query = text_input, count = number_input)
 
 ## sort and grab percentages between each type
 ## of tweet with pandas..
@@ -140,5 +144,5 @@ print("Neutral tweets percentage from: " + Topic + " {} %  ".format(100*(len(twe
 
 display(df)
 
-"""# **Actually run the Analysis!**"""
+
 
