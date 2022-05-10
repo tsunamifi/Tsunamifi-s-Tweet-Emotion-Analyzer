@@ -17,11 +17,13 @@ Why? for fun, probably.
 # Commented out IPython magic to ensure Python compatibility.
 #core setup.
 
-## installing things here (for non colab use)
-pip install tweepy
-pip install nltk
-pip install pandas
-pip install textblob
+## installing things here (for non colab use, uncomment if you need to)
+
+#pip install tweepy
+#pip install nltk
+#pip install pandas
+#pip install textblob
+
 ##importing things here!
 ### pandas helps us visualize and sort data, we'll need it if you want to see results.
 import pandas as pd
