@@ -120,9 +120,9 @@ st.write("You're welcome to use both a user and topic but both at the same time 
 
 
 with st.form(key='vars'):
-	text_input = st.text_input(label='Choose topic')
+        text_input = st.text_input(label='Choose topic')
         number_input = st.number_input(label= 'How many tweets should we source?')
-	submit_button = st.form_submit_button(label='Submit')
+        submit_button = st.form_submit_button(label='Submit')
 
 tweets = fetch_tweets(query = text_input, count = number_input)
 
