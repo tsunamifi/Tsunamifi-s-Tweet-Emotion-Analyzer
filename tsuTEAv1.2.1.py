@@ -149,7 +149,7 @@ def run():
  ## of tweet with pandas..
  df = pd.DataFrame(tweets, columns= ['tweets', 'clean_tweets', 'result'])
 
- st.write({tweets})
+ st.write(' '.join(tweets))
  ### dropping duplicate tweets too..
  df = df.drop_duplicates(subset='clean_tweets')
  df.to_csv('tweetbank.csv', index= False)
