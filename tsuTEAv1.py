@@ -156,18 +156,18 @@ def run():
 
  ptweets = df[df['sentiment'] == 'positive']
  posper = (100*len(ptweets)/len(tweets))
- print(f'Positive tweets (posper) %'))
+ print(f'Positive tweets (posper) %')
   
  ntweets = df[df['sentiment'] == 'negative']
  negper = (100*len(ntweets)/len(tweets))
- print(f'Negative tweets (negper) %'))
+ print(f'Negative tweets (negper) %')
        
  nuper = (100 - posper - negper)
- print(f'Neutral tweets (nuper) %'))
+ print(f'Neutral tweets (nuper) %')
    
  st.dataframe(df)
 
- wcloud = st.checkbox('Generate word cloud')
+ wcloud = st.checkbox(label='Generate word cloud')
 
  twt = " ".join(df['clean_tweets'])
  wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
