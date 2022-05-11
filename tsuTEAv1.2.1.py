@@ -143,7 +143,7 @@ with st.form(key='vars'):
         submit_button = st.form_submit_button(label='Submit')
         
 def run():
- tweets = fetch_tweets(query = text_input, count = number_input)
+ tweets = fetch_tweets(query = text_input, count = 200)
 
  ## sort and grab percentages between each type
  ## of tweet with pandas..
