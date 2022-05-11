@@ -154,11 +154,11 @@ def run():
  df = df.drop_duplicates(subset='clean_tweets')
  df.to_csv('tweetbank.csv', index= False)
 
- ptweets = df[df['sentiment'] == 'positive']
+ ptweets = df[df['result'] == 'positive']
  posper = (100*len(ptweets)/len(tweets))
  print(f'Positive tweets (posper) %')
   
- ntweets = df[df['sentiment'] == 'negative']
+ ntweets = df[df['result'] == 'negative']
  negper = (100*len(ntweets)/len(tweets))
  print(f'Negative tweets (negper) %')
        
