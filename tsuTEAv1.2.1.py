@@ -122,7 +122,7 @@ def fetch_tweets(query, count = 50):
       for tweet in collected_tweets:
         parsed_tweet = tweet.text
         clean_tweet = cleanup(parsed_tweet)
-        stem_tweet = TextBlob(stem(clean_tweet))
+        stem_tweet = TextBlob(root(clean_tweet))
         scored_tweet = get_tweet_score(stem_tweet)
         tweets.append((parsed_tweet, clean_tweet, scored_tweet))
         return tweets
