@@ -24,7 +24,7 @@ import streamlit as st
 import pandas as pd
 
 ### matplot helps us visualize data too.
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 ### ntlk is a word processing library, we can use it to parse our tweets for our goal.
 import nltk

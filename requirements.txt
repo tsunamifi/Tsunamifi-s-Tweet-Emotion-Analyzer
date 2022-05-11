@@ -3,3 +3,4 @@ tweepy==3.10.0
 nltk
 pandas
 textblob
+matplotlib.pyplot
