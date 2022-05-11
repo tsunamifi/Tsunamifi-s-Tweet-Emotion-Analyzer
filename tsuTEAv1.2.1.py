@@ -117,7 +117,7 @@ def fetch_tweets(query, count = 50):
     tweets = []  
 
     try:
-      collected_tweets = api.search(q = query + ' -filter:retweets')
+      collected_tweets = api.search(q = query + ' -filter:retweets', count = count)
 
       for tweet in collected_tweets:
         parsed_tweet = tweet.text
@@ -138,12 +138,12 @@ st.title("Choose Topic on twitter to analyze")
 
 
 with st.form(key='vars'):
-        text_input = st.text_input(label='Choose topic')
-        #number_input = st.number_input(label= 'How many tweets should we source?')
-        submit_button = st.form_submit_button(label='Submit')
+        texti = st.text_input(label='Choose topic')
+        numberi = st.number_input(label= 'How many tweets should we source?')
+        submit = st.form_submit_button(label='Submit')
         
 def run():
- tweets = fetch_tweets(query = 'potus')
+ tweets = fetch_tweets(query = texti, count = numberi)
 
  ## sort and grab percentages between each type
  ## of tweet with pandas..
