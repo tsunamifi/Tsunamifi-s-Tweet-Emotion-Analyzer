@@ -181,7 +181,7 @@ def run():
  plt.axis('off')
  plt.imshow(wordcloud)
 
-if submit_button:
+if submit:
     run()
 else:
     pass
