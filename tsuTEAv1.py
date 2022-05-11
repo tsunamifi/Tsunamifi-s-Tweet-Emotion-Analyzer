@@ -17,21 +17,23 @@ Why? for fun, probably.
 # Commented out IPython magic to ensure Python compatibility.
 #core setup.
 
-## installing things here (for non colab use, uncomment if you need to)
-
-#pip install tweepy
-#pip install nltk
-#pip install pandas
-#pip install textblob
 
 ##importing things here!
 import streamlit as st
 ### pandas helps us visualize and sort data, we'll need it if you want to see results.
 import pandas as pd
 
+### matplot helps us visualize data too.
+import matplotlib.pyplot as plt
+
 ### ntlk is a word processing library, we can use it to parse our tweets for our goal.
 import nltk
-nltk.download('all-corpora')
+from wordcloud import WordCloud,STOPWORDS
+nltk.download('punkt')   
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
 
 ### tweepy is the official twitter python library/api; this is how we'll be able to source our tweets.
 ### textblob is a text processing library.
@@ -72,22 +74,38 @@ def cleanup(text):
 
      ## replaces all letters and numbers associated with chars like "\/:"
      ## (which are chars used in links) with spaces which removes them.
+     ## we're also tokenizing each word here
+      text = text.lower()
       text = re.sub('(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)', ' ', text)
+  
+      text_tokens = word_tokenize(text)
+      text = [word for word in text_tokens if not word in stopwords.words()]
 
       text = ' '.join(text)
       return text
 
+# here we're getting rid of parts of words that dont mean anything
+# in sentiment analysis so we'll end up with just scoring rootwords
+def root(text):
+
+  porter = PorterStemmer()
+  token_words = word_tokenize(text)
+  stem_sentence = []
+  for word in token_words:
+    stem_sentence.append(porter.stem(word))
+  return " ".join(stem_sentence)    
+    
+    
 # lets find out the cleaned tweets' emotion!
 def get_tweet_score(analysis):
 
     ##then scores the tweet
     if analysis.sentiment.polarity > 0:
       return 'positive'
-    elif analysis.sentiment.polarity == 0:
-      return 'neutral'
     elif analysis.sentiment.polarity < 0:
       return 'negative'
-
+    else:
+      return 'neutral'
 
 
 # inner workings
@@ -104,7 +122,7 @@ def fetch_tweets(query, count = 50):
       for tweet in collected_tweets:
         parsed_tweet = tweet.text
         clean_tweet = cleanup(parsed_tweet)
-        stem_tweet = TextBlob(clean_tweet)
+        stem_tweet = TextBlob(stem(clean_tweet))
         scored_tweet = get_tweet_score(stem_tweet)
         tweets.append((parsed_tweet, clean_tweet, scored_tweet))
         return tweets
@@ -112,8 +130,8 @@ def fetch_tweets(query, count = 50):
       print("Error : " + str(e))
       exit(1)
 
-st.title("Choose Topic or User to analyze")
-st.write("You're welcome to use both a user and topic but both at the same time are not required, you can use one or the other too if you'd like.")
+st.title("Choose Topic on twitter to analyze")
+#st.write("You're welcome to use both a user and topic but both at the same time are not required, you can use one or the other too if you'd like.")
 
 
 # Take off...
@@ -129,7 +147,7 @@ def run():
 
  ## sort and grab percentages between each type
  ## of tweet with pandas..
- df = pd.DataFrame(tweets, columns= ['tweets', 'clean_tweets', 'sentiment'])
+ df = pd.DataFrame(tweets, columns= ['tweets', 'clean_tweets', 'result'])
 
 
  ### dropping duplicate tweets too..
@@ -137,15 +155,31 @@ def run():
  df.to_csv('tweetbank.csv', index= False)
 
  ptweets = df[df['sentiment'] == 'positive']
- print("Percentage of positive tweets from: " + text_input + " {} %".format(100*len(ptweets)/len(tweets)))
+ posper = (100*len(ptweets)/len(tweets))
+ print(f'Positive tweets (posper) %'))
   
  ntweets = df[df['sentiment'] == 'negative']
- print("Percentage of negative tweets from: " + text_input + " {} %".format(100*len(ntweets)/len(tweets)))
- print("Neutral tweets percentage from: " + text_input + " {} %  ".format(100*(len(tweets) -(len( ntweets )+len( ptweets)))/len(tweets)))
-
+ negper = (100*len(ntweets)/len(tweets))
+ print(f'Negative tweets (negper) %'))
+       
+ nuper = (100 - posper - negper)
+ print(f'Neutral tweets (nuper) %'))
+   
  st.dataframe(df)
 
+ wcloud = st.checkbox('Generate word cloud')
 
+ twt = " ".join(df['clean_tweets'])
+ wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
+
+ if wcloud:
+   plt.show()
+ else:
+    pass
+
+ plt.figure(1,figsize=(8, 8))
+ plt.axis('off')
+ plt.imshow(wordcloud)
 
 if submit_button:
     run()
