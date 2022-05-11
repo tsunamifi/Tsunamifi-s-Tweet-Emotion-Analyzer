@@ -90,10 +90,10 @@ def root(text):
 
   porter = PorterStemmer()
   token_words = word_tokenize(text)
-  stem_sentence = []
+  root_sentence = []
   for word in token_words:
     stem_sentence.append(porter.stem(word))
-  return " ".join(stem_sentence)    
+  return " ".join(root_sentence)    
     
     
 # lets find out the cleaned tweets' emotion!
@@ -143,7 +143,7 @@ with st.form(key='vars'):
         submit_button = st.form_submit_button(label='Submit')
         
 def run():
- tweets = fetch_tweets(query = text_input, count = 200)
+ tweets = fetch_tweets(query = potus, count = 200)
 
  ## sort and grab percentages between each type
  ## of tweet with pandas..
@@ -156,14 +156,14 @@ def run():
 
  ptweets = df[df['result'] == 'positive']
  posper = (100*len(ptweets)/len(tweets))
- print(f'Positive tweets (posper) %')
+ st.write(f'Positive tweets (posper) %')
   
  ntweets = df[df['result'] == 'negative']
  negper = (100*len(ntweets)/len(tweets))
- print(f'Negative tweets (negper) %')
+ st.write(f'Negative tweets (negper) %')
        
  nuper = (100 - posper - negper)
- print(f'Neutral tweets (nuper) %')
+ st.write(f'Neutral tweets (nuper) %')
    
  st.dataframe(df)
 
