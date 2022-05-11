@@ -143,7 +143,7 @@ def run():
  print("Percentage of negative tweets from: " + text_input + " {} %".format(100*len(ntweets)/len(tweets)))
  print("Neutral tweets percentage from: " + text_input + " {} %  ".format(100*(len(tweets) -(len( ntweets )+len( ptweets)))/len(tweets)))
 
- display(df)
+ st.dataframe(df)
 
 
 
