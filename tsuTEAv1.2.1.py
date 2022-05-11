@@ -117,7 +117,7 @@ def fetch_tweets(query, count = 50):
     tweets = []  
 
     try:
-      collected_tweets = api.search(q = query + ' -filter:retweets', count = count)
+      collected_tweets = api.search(q = query + ' -filter:retweets')
 
       for tweet in collected_tweets:
         parsed_tweet = tweet.text
@@ -143,13 +143,12 @@ with st.form(key='vars'):
         submit_button = st.form_submit_button(label='Submit')
         
 def run():
- tweets = fetch_tweets(query = 'potus', count = 200)
+ tweets = fetch_tweets(query = 'potus')
 
  ## sort and grab percentages between each type
  ## of tweet with pandas..
- df = pd.DataFrame(tweets, columns= ['tweets', 'clean_tweets', 'result'])
+ df = pd.DataFrame(tweets, columns= ['tweets', 'result'])
 
- st.write(' '.join(str(tweets)))
  ### dropping duplicate tweets too..
  df = df.drop_duplicates(subset='clean_tweets')
  df.to_csv('tweetbank.csv', index= False)
