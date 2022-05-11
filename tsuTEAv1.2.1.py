@@ -92,7 +92,7 @@ def root(text):
   token_words = word_tokenize(text)
   root_sentence = []
   for word in token_words:
-    stem_sentence.append(porter.stem(word))
+    root_sentence.append(porter.stem(word))
   return " ".join(root_sentence)    
     
     
