@@ -147,10 +147,10 @@ def run():
 
  ## sort and grab percentages between each type
  ## of tweet with pandas..
- df = pd.DataFrame(tweets, columns= ['tweets', 'result'])
+ df = pd.DataFrame(tweets, columns= ['tweets', 'clean_tweets', 'result'])
 
  ### dropping duplicate tweets too..
- #df = df.drop_duplicates(subset='clean_tweets')
+ df = df.drop_duplicates(subset='clean_tweets')
  df.to_csv('tweetbank.csv', index= False)
 
  ptweets = df[df['result'] == 'positive']
