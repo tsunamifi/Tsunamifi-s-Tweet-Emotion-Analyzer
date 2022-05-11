@@ -136,11 +136,11 @@ df = df.drop_duplicates(subset='clean_tweets')
 df.to_csv('tweetbank.csv', index= False)
 
 ptweets = df[df['sentiment'] == 'positive']
-print("Percentage of positive tweets from: " + Topic + " {} %".format(100*len(ptweets)/len(tweets)))
+print("Percentage of positive tweets from: " + text_input + " {} %".format(100*len(ptweets)/len(tweets)))
   
 ntweets = df[df['sentiment'] == 'negative']
-print("Percentage of negative tweets from: " + Topic + " {} %".format(100*len(ntweets)/len(tweets)))
-print("Neutral tweets percentage from: " + Topic + " {} %  ".format(100*(len(tweets) -(len( ntweets )+len( ptweets)))/len(tweets)))
+print("Percentage of negative tweets from: " + text_input + " {} %".format(100*len(ntweets)/len(tweets)))
+print("Neutral tweets percentage from: " + text_input + " {} %  ".format(100*(len(tweets) -(len( ntweets )+len( ptweets)))/len(tweets)))
 
 display(df)
 
