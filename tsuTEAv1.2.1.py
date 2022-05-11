@@ -139,7 +139,7 @@ st.title("Choose Topic on twitter to analyze")
 
 with st.form(key='vars'):
         text_input = st.text_input(label='Choose topic')
-        number_input = st.number_input(label= 'How many tweets should we source?')
+        #number_input = st.number_input(label= 'How many tweets should we source?')
         submit_button = st.form_submit_button(label='Submit')
         
 def run():
@@ -150,7 +150,7 @@ def run():
  df = pd.DataFrame(tweets, columns= ['tweets', 'result'])
 
  ### dropping duplicate tweets too..
- df = df.drop_duplicates(subset='clean_tweets')
+ #df = df.drop_duplicates(subset='clean_tweets')
  df.to_csv('tweetbank.csv', index= False)
 
  ptweets = df[df['result'] == 'positive']
