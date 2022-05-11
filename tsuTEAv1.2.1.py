@@ -24,7 +24,7 @@ import streamlit as st
 import pandas as pd
 
 ### matplot helps us visualize data too.
-import matplotlib.pyplot as plt
+import matplotlib as plt
 
 ### ntlk is a word processing library, we can use it to parse our tweets for our goal.
 import nltk
@@ -174,6 +174,7 @@ def run():
 
  if wcloud:
    plt.show()
+   st.pyplot(wordcloud)
  else:
     pass
 
