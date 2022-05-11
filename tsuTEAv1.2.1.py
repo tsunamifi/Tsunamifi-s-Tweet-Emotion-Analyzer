@@ -117,7 +117,7 @@ def fetch_tweets(query, count = 50):
     tweets = []  
 
     try:
-      collected_tweets = api.search(q = query, count = count)
+      collected_tweets = api.search(q = query + ' -filter:retweets', count = count)
 
       for tweet in collected_tweets:
         parsed_tweet = tweet.text
@@ -156,14 +156,14 @@ def run():
 
  ptweets = df[df['result'] == 'positive']
  posper = (100*len(ptweets)/len(tweets))
- st.write(f'Positive tweets (posper) %')
+ st.write(f'Positive tweets {posper} %')
   
  ntweets = df[df['result'] == 'negative']
  negper = (100*len(ntweets)/len(tweets))
- st.write(f'Negative tweets (negper) %')
+ st.write(f'Negative tweets {negper} %')
        
  nuper = (100 - posper - negper)
- st.write(f'Neutral tweets (nuper) %')
+ st.write(f'Neutral tweets {nuper} %')
    
  st.dataframe(df)
 
