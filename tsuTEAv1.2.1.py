@@ -117,7 +117,7 @@ def fetch_tweets(query, count = 50):
     tweets = []  
 
     try:
-      collected_tweets = api.search(q = query + ' -filter:retweets', count = count)
+      collected_tweets = api.search(q = query + ' -filter:retweets', count = 100)
 
       for tweet in collected_tweets:
         parsed_tweet = tweet.text
