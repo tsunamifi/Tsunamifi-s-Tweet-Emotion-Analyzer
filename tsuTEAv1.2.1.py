@@ -109,7 +109,7 @@ with st.form(key='vars'):
 # inner workings
 ## we're gonna grab this x amount of tweets to parse
 def fetch_tweets():
-    global twweets
+    global tweets
     tweets = []
 
     c = twint.Config()
