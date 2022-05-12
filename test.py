@@ -60,47 +60,7 @@ st.title("Choose Topic on twitter to analyze")
 
 
         
-def run():
 
- ## sort and grab percentages between each type
- ## of tweet with pandas..
-
- ### dropping duplicate tweets too..
- 
-                                           
- ptweets = tweetsdf[tweetdf['result'] == 'Positive']
- posper = (100*len(ptweets)/len(tweets))
- st.write(f'Positive tweets {posper} %')
-  
- ntweets = tweetsdf[tweetdf['result'] == 'Negative']
- negper = (100*len(ntweets)/len(tweets))
- st.write(f'Negative tweets {negper} %')
-       
- nuper = (100 - posper - negper)
- st.write(f'Neutral tweets {nuper} %')
-   
- st.dataframe(tweetsdf)
- tweetsdf[['tweets','tweets(cleaned)','result']].st.dataframe()
- wcloud = st.checkbox(label='Generate word cloud')
-
- twt = " ".join(df['clean_tweets'])
- wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
-
- if wcloud:
-   plt.show()
-   st.pyplot(wordcloud)
- else:
-    pass
-
- plt.figure(1,figsize=(8, 8))
- plt.axis('off')
- plt.imshow(wordcloud)
-
-if submit:
-    twintConfig(tweets_df = twint.storage.panda.Tweets_df)
-    st.dataframe(tweets_df)
-else:
-    pass
 #for compatibility issues with twint
 
 def twintConfig():
@@ -213,3 +173,44 @@ else:
 
 tweets_df[["cleaned_tweet","polarity","Sentiment"]].head(5)
 st.dataframe(tweets_df)
+def run():
+
+ ## sort and grab percentages between each type
+ ## of tweet with pandas..
+
+ ### dropping duplicate tweets too..
+ 
+                                           
+ ptweets = tweetsdf[tweetdf['result'] == 'Positive']
+ posper = (100*len(ptweets)/len(tweets))
+ st.write(f'Positive tweets {posper} %')
+  
+ ntweets = tweetsdf[tweetdf['result'] == 'Negative']
+ negper = (100*len(ntweets)/len(tweets))
+ st.write(f'Negative tweets {negper} %')
+       
+ nuper = (100 - posper - negper)
+ st.write(f'Neutral tweets {nuper} %')
+   
+ st.dataframe(tweetsdf)
+ tweetsdf[['tweets','tweets(cleaned)','result']].st.dataframe()
+ wcloud = st.checkbox(label='Generate word cloud')
+
+ twt = " ".join(df['clean_tweets'])
+ wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
+
+ if wcloud:
+   plt.show()
+   st.pyplot(wordcloud)
+ else:
+    pass
+
+ plt.figure(1,figsize=(8, 8))
+ plt.axis('off')
+ plt.imshow(wordcloud)
+
+if submit:
+    twintConfig(tweets_df = twint.storage.panda.Tweets_df)
+    st.dataframe(tweets_df)
+else:
+    pass
