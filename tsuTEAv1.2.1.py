@@ -118,7 +118,7 @@ def fetch_tweets():
     c.Pandas = True
     c.Lang = "en"
     twint.run.Search(c)
-    nonlocal tweetsdf
+   
     tweetsdf = twint.storage.panda.Tweets_df 
     tweetsdf = tweetsdf.drop_duplicates(subset=['date', 'tweet'])
     tweetsdf.reset_index(inplace=True)
