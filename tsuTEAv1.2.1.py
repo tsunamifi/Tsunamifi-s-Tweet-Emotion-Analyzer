@@ -94,11 +94,11 @@ def get_tweet_score(analysis):
   #  tweetsdf.at[row[0], 'polarity'] = analysis.sentiment[0]
   # tweetsdf.at[row[0], 'subjectivity'] = analysis.sentiment[1]
     ##then scores the tweet
-  if scored_tweet.sentiment.polarity > 0:
+    if scored_tweet.sentiment.polarity > 0:
       return 'positive'
-  elif scored_tweet.sentiment.polarity < 0:
+    elif scored_tweet.sentiment.polarity < 0:
       return 'negative'
-  else:
+    else:
       return 'neutral'
 
 with st.form(key='vars'):
