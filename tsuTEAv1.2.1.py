@@ -150,12 +150,12 @@ def run():
  tweetsdf = pd.DataFrame(tweets, columns= ['tweets', 'tweets(cleaned)', 'result'])
 
  ### dropping duplicate tweets too..
-    if analysis.sentiment[0]>0:
-        tweetsdf.at[row[0], 'result'] = "Positive"
-    elif analysis.sentiment[0]<0:
-        tweetsdf.at[row[0], 'result'] = "Negative"
-    else:
-        tweetsdf.at[row[0], 'result'] = "Neutral"
+ if analysis.sentiment[0]>0:
+     tweetsdf.at[row[0], 'result'] = "Positive"
+ elif analysis.sentiment[0]<0:
+     tweetsdf.at[row[0], 'result'] = "Negative"
+ else:
+     tweetsdf.at[row[0], 'result'] = "Neutral"
                                            
  ptweets = tweetsdf[tweetdf['result'] == 'Positive']
  posper = (100*len(ptweets)/len(tweets))
