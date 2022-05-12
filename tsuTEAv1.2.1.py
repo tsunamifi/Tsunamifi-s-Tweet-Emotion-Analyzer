@@ -53,10 +53,7 @@ from IPython.display import display
 
 st.set_page_config(layout="wide")
 st.title("Tsunamifi's Twitter Sentiment Analysis Bot")
-st.write("This WebAPP will allow you to plug in a topic from twitter and determine if their tweets are Positive, Negative or Neutral.")
-
-global tweets
-tweets = []
+st.write("This WebAPP will allow you to plug in a topic from twitter and determine if their tweets are Positive, Negative or Neutral
 
 # this will clean unnecessary and maybe complicated things out of a tweet
 # like links or #'s 
@@ -154,9 +151,9 @@ def run():
  ## of tweet with pandas..
 
  ### dropping duplicate tweets too..
- if tweets.sentiment[0]>0:
+ if analysis.sentiment[0]>0:
      tweetsdf.at[row[0], 'result'] = "Positive"
- elif tweets.sentiment[0]<0:
+ elif analysis.sentiment[0]<0:
      tweetsdf.at[row[0], 'result'] = "Negative"
  else:
      tweetsdf.at[row[0], 'result'] = "Neutral"
