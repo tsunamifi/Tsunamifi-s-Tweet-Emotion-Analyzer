@@ -104,7 +104,7 @@ else:
 #for compatibility issues with twint
 
 def twintConfig():
-c = twint.Config()
+    c = twint.Config()
     c.Search = texti
     c.Limit = numberi
     c.Pandas = True
@@ -192,25 +192,25 @@ tweets_df["cleaned_tweet"].head()
 """## Sentiment analysis (TextBlob)"""
 
 # Commented out IPython magic to ensure Python compatibility.
-# %%time
-# print("Running sentiment process")
-# for row in tweets_df.itertuples():
-#     tweet = tweets_df.at[row[0], 'cleaned_tweet']
-# 
-#     #run sentiment using TextBlob
-#     analysis = TextBlob(tweet)
-# 
-#     #set value to dataframe
-#     tweets_df.at[row[0], 'polarity'] = analysis.sentiment[0]
-#     tweets_df.at[row[0], 'subjectivity'] = analysis.sentiment[1]
-# 
-#     #Create Positive / negative column depending on polarity
-#     if analysis.sentiment[0]>0:
-#         tweets_df.at[row[0], 'Sentiment'] = "Positive"
-#     elif analysis.sentiment[0]<0:
-#         tweets_df.at[row[0], 'Sentiment'] = "Negative"
-#     else:
-#         tweets_df.at[row[0], 'Sentiment'] = "Neutral"
+%%time
+ print("Running sentiment process")
+for row in tweets_df.itertuples():
+    tweet = tweets_df.at[row[0], 'cleaned_tweet']
+ 
+     #run sentiment using TextBlob
+     analysis = TextBlob(tweet)
+ 
+     #set value to dataframe
+     tweets_df.at[row[0], 'polarity'] = analysis.sentiment[0]
+     tweets_df.at[row[0], 'subjectivity'] = analysis.sentiment[1]
+ 
+     #Create Positive / negative column depending on polarity
+     if analysis.sentiment[0]>0:
+         tweets_df.at[row[0], 'Sentiment'] = "Positive"
+     elif analysis.sentiment[0]<0:
+         tweets_df.at[row[0], 'Sentiment'] = "Negative"
+     else:
+         tweets_df.at[row[0], 'Sentiment'] = "Neutral"
 
 tweets_df[["cleaned_tweet","polarity","Sentiment"]].head(5)
 st.dataframe(tweets_df)
