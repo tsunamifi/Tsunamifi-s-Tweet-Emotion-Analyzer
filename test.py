@@ -97,7 +97,7 @@ def run():
  plt.imshow(wordcloud)
 
 if submit:
-    twintConfig()
+    twintConfig(tweets_df = twint.storage.panda.Tweets_df)
     st.dataframe(tweets_df)
 else:
     pass
@@ -110,7 +110,7 @@ def twintConfig():
     c.Pandas = True
     c.Lang = "en"
     twint.run.Search(c)
-    tweets_df = twint.storage.panda.Tweets_df
+   
     return tweets_df
 """# precleaning"""
 
