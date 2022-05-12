@@ -93,11 +93,11 @@ def get_tweet_score(analysis):
   #  tweetsdf.at[row[0], 'polarity'] = analysis.sentiment[0]
   # tweetsdf.at[row[0], 'subjectivity'] = analysis.sentiment[1]
     ##then scores the tweet
-    if analysis.sentiment.polarity > 0:
+  if analysis.sentiment.polarity > 0:
       return 'positive'
-    elif analysis.sentiment.polarity < 0:
+  elif analysis.sentiment.polarity < 0:
       return 'negative'
-    else:
+  else:
       return 'neutral'
 
 with st.form(key='vars'):
@@ -148,7 +148,7 @@ def run():
 
  ## sort and grab percentages between each type
  ## of tweet with pandas..
-  tweetsdf[['tweets','tweets(cleaned)','result']].head()[['tweets','tweets(cleaned)','result']]
+  
 
  ### dropping duplicate tweets too..
  if analysis.sentiment[0]>0:
@@ -170,7 +170,7 @@ def run():
  st.write(f'Neutral tweets {nuper} %')
    
  st.dataframe(tweetsdf)
-
+ tweetsdf[['tweets','tweets(cleaned)','result']].st.dataframe()
  wcloud = st.checkbox(label='Generate word cloud')
 
  twt = " ".join(df['clean_tweets'])
