@@ -121,7 +121,7 @@ def fetch_tweets():
     tweetsdf.reset_index(inplace=True)
     tweetsdf.drop("index",axis =1,inplace=True)
     
-    tweetsdf['tweets(cleaned)'] = tweetsdf['tweet'.apply(cleanup)
+    tweetsdf['tweets(cleaned)'] = tweetsdf['tweet'.apply(cleanup)]
                                            
 
 
@@ -130,7 +130,7 @@ def fetch_tweets():
          stem_tweet = TextBlob(root(parsed_tweet))
          scored_tweet = get_tweet_score(stem_tweet)
          tweets.append((parsed_tweet, clean_tweet, scored_tweet))
-     return tweets
+      return tweets
     except
       print("Error")
 
