@@ -131,8 +131,8 @@ def fetch_tweets():
          scored_tweet = get_tweet_score(stem_tweet)
          tweets.append((parsed_tweet, clean_tweet, scored_tweet))
          return tweets
-except:
-   print('Error')
+    except:
+      print('Error')
 
 st.title("Choose Topic on twitter to analyze")
 #st.write("You're welcome to use both a user and topic but both at the same time are not required, you can use one or the other too if you'd like.")
