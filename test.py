@@ -27,7 +27,6 @@ from wordcloud import WordCloud
 """### Configure and run Twint (twitter scrapper)"""
 
 #for compatibility issues with twint
-nest_asyncio.apply()
 
 bank_search = {"FNB":"FNBSA", "StandardBank":"StandardBankZA OR \"Standard Bank\" OR \"standard bank\"","Nedbank":"Nedbank OR nedbank","ABSA": "Absa OR ABSA OR absa OR AbsaSouthAfrica","Capitec":"CapitecBankSA OR Capitec or capitec"}
 
