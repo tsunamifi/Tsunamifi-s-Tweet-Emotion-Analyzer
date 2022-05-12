@@ -125,12 +125,12 @@ def fetch_tweets():
                                            
 
 
-      for row in tweetsdf.intertuples():
+     for row in tweetsdf.intertuples():
         parsed_tweet = tweetsdf.at[row[0], 'tweets(cleaned)']
         stem_tweet = TextBlob(root(parsed_tweet))
         scored_tweet = get_tweet_score(stem_tweet)
         tweets.append((parsed_tweet, clean_tweet, scored_tweet))
-        return tweets
+     return tweets
     except
       print("Error")
 
@@ -144,7 +144,6 @@ st.title("Choose Topic on twitter to analyze")
 
         
 def run():
- tweets = 
 
  ## sort and grab percentages between each type
  ## of tweet with pandas..
