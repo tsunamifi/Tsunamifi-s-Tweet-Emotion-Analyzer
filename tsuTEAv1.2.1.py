@@ -107,7 +107,7 @@ with st.form(key='vars'):
 # inner workings
 ## we're gonna grab this x amount of tweets to parse
 def fetch_tweets():
-
+    tweets = []
 
     c = twint.Config()
     c.Search = texti
@@ -126,10 +126,10 @@ def fetch_tweets():
 
 
      for row in tweetsdf.intertuples():
-        parsed_tweet = tweetsdf.at[row[0], 'tweets(cleaned)']
-        stem_tweet = TextBlob(root(parsed_tweet))
-        scored_tweet = get_tweet_score(stem_tweet)
-        tweets.append((parsed_tweet, clean_tweet, scored_tweet))
+         parsed_tweet = tweetsdf.at[row[0], 'tweets(cleaned)']
+         stem_tweet = TextBlob(root(parsed_tweet))
+         scored_tweet = get_tweet_score(stem_tweet)
+         tweets.append((parsed_tweet, clean_tweet, scored_tweet))
      return tweets
     except
       print("Error")
