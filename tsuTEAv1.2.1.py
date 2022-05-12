@@ -148,7 +148,7 @@ def run():
 
  ## sort and grab percentages between each type
  ## of tweet with pandas..
- tweetsdf = pd.DataFrame(tweets, columns= ['tweets', 'tweets(cleaned)', 'result'])
+  tweetsdf[['tweets','tweets(cleaned)','result']].head()[['tweets','tweets(cleaned)','result']]
 
  ### dropping duplicate tweets too..
  if analysis.sentiment[0]>0:
