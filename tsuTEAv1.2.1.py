@@ -109,6 +109,7 @@ with st.form(key='vars'):
 # inner workings
 ## we're gonna grab this x amount of tweets to parse
 def fetch_tweets():
+    global twweets
     tweets = []
 
     c = twint.Config()
@@ -150,11 +151,11 @@ def run():
  ## sort and grab percentages between each type
  ## of tweet with pandas..
   
- scored_tweet = get_tweet_score(stem_tweet)
+ tweets
  ### dropping duplicate tweets too..
- if scored_tweet.sentiment[0]>0:
+ if tweets.sentiment[0]>0:
      tweetsdf.at[row[0], 'result'] = "Positive"
- elif scored_tweet.sentiment[0]<0:
+ elif tweets.sentiment[0]<0:
      tweetsdf.at[row[0], 'result'] = "Negative"
  else:
      tweetsdf.at[row[0], 'result'] = "Neutral"
