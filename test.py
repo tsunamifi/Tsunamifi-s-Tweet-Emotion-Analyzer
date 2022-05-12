@@ -27,9 +27,12 @@ from wordcloud import WordCloud
 """### Configure and run Twint (twitter scrapper)"""
 
 #for compatibility issues with twint
-
+runit = st.button('run')
 bank_search = {"FNB":"FNBSA", "StandardBank":"StandardBankZA OR \"Standard Bank\" OR \"standard bank\"","Nedbank":"Nedbank OR nedbank","ABSA": "Absa OR ABSA OR absa OR AbsaSouthAfrica","Capitec":"CapitecBankSA OR Capitec or capitec"}
-
+if runit
+   st.dataframe(tweets_df[["cleaned_tweet","polarity","Sentiment"]])
+else
+ pass
 def twintConfig(date_from,date_to, search_string):
     c = twint.Config()
     c.Search = search_string[1]
