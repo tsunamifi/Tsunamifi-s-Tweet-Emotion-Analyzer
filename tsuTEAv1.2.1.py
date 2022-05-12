@@ -90,13 +90,13 @@ def root(text):
     
 # lets find out the cleaned tweets' emotion!
 def get_tweet_score(analysis):
-    scored_tweet = get_tweet_score(stem_tweet)
+   
   #  tweetsdf.at[row[0], 'polarity'] = analysis.sentiment[0]
   # tweetsdf.at[row[0], 'subjectivity'] = analysis.sentiment[1]
     ##then scores the tweet
-    if scored_tweet.sentiment.polarity > 0:
+    if analysis.sentiment.polarity > 0:
       return 'positive'
-    elif scored_tweet.sentiment.polarity < 0:
+    elif analysis.sentiment.polarity < 0:
       return 'negative'
     else:
       return 'neutral'
@@ -150,11 +150,11 @@ def run():
  ## sort and grab percentages between each type
  ## of tweet with pandas..
   
-
+scored_tweet = get_tweet_score(stem_tweet)
  ### dropping duplicate tweets too..
- if analysis.sentiment[0]>0:
+ if scored_tweet.sentiment[0]>0:
      tweetsdf.at[row[0], 'result'] = "Positive"
- elif analysis.sentiment[0]<0:
+ elif scored_tweet.sentiment[0]<0:
      tweetsdf.at[row[0], 'result'] = "Negative"
  else:
      tweetsdf.at[row[0], 'result'] = "Neutral"
