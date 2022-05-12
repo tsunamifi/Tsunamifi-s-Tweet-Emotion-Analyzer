@@ -55,6 +55,8 @@ st.set_page_config(layout="wide")
 st.title("Tsunamifi's Twitter Sentiment Analysis Bot")
 st.write("This WebAPP will allow you to plug in a topic from twitter and determine if their tweets are Positive, Negative or Neutral")
 
+global scored_tweet
+
 # this will clean unnecessary and maybe complicated things out of a tweet
 # like links or #'s 
 def cleanup(text):
@@ -91,8 +93,7 @@ def root(text):
 # lets find out the cleaned tweets' emotion!
 def get_tweet_score(analysis):
    
-  #  tweetsdf.at[row[0], 'polarity'] = analysis.sentiment[0]
-  # tweetsdf.at[row[0], 'subjectivity'] = analysis.sentiment[1]
+  
     ##then scores the tweet
     if analysis.sentiment.polarity > 0:
       return 'positive'
@@ -151,6 +152,9 @@ def run():
  ## of tweet with pandas..
 
  ### dropping duplicate tweets too..
+ analysis = scored_tweet
+ tweetsdf.at[row[0], 'polarity'] = analysis.sentiment[0]
+ tweetsdf.at[row[0], 'subjectivity'] = analysis.sentiment[1]
  if analysis.sentiment[0]>0:
      tweetsdf.at[row[0], 'result'] = "Positive"
  elif analysis.sentiment[0]<0:
