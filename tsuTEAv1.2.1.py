@@ -53,7 +53,7 @@ from IPython.display import display
 
 st.set_page_config(layout="wide")
 st.title("Tsunamifi's Twitter Sentiment Analysis Bot")
-st.write("This WebAPP will allow you to plug in a topic from twitter and determine if their tweets are Positive, Negative or Neutral
+st.write("This WebAPP will allow you to plug in a topic from twitter and determine if their tweets are Positive, Negative or Neutral")
 
 # this will clean unnecessary and maybe complicated things out of a tweet
 # like links or #'s 
