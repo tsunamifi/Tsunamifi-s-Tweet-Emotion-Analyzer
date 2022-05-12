@@ -150,7 +150,7 @@ def run():
  ## sort and grab percentages between each type
  ## of tweet with pandas..
   
-scored_tweet = get_tweet_score(stem_tweet)
+ scored_tweet = get_tweet_score(stem_tweet)
  ### dropping duplicate tweets too..
  if scored_tweet.sentiment[0]>0:
      tweetsdf.at[row[0], 'result'] = "Positive"
