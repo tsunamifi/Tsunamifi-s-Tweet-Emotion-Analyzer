@@ -120,18 +120,18 @@ def fetch_tweets():
     tweetsdf = tweetsdf.drop_duplicates(subset=['date', 'tweet'])
     tweetsdf.reset_index(inplace=True)
     tweetsdf.drop("index",axis =1,inplace=True)
-  try:
-    tweetsdf['tweets(cleaned)'] = tweetsdf['tweet'.apply(cleanup)]
+    try:
+      tweetsdf['tweets(cleaned)'] = tweetsdf['tweet'.apply(cleanup)]
                                            
 
 
-    for row in tweetsdf.intertuples():
+      for row in tweetsdf.intertuples():
          parsed_tweet = tweetsdf.at[row[0], 'tweets(cleaned)']
          stem_tweet = TextBlob(root(parsed_tweet))
          scored_tweet = get_tweet_score(stem_tweet)
          tweets.append((parsed_tweet, clean_tweet, scored_tweet))
          return tweets
-   except:
+    except:
       print('Error')
 
 st.title("Choose Topic on twitter to analyze")
