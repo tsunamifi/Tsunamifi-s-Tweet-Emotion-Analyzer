@@ -133,7 +133,7 @@ def fetch_tweets():
          stem_tweet = TextBlob(root(parsed_tweet))
          scored_tweet = get_tweet_score(stem_tweet)
          tweets.append((parsed_tweet, clean_tweet, scored_tweet))
-         return tweets
+         return tweetsdf
     except:
       print('Error')
 
