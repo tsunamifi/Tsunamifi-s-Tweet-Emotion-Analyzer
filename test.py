@@ -29,7 +29,9 @@ from wordcloud import WordCloud
 #for compatibility issues with twint
 runit = st.button('run')
 bank_search = {"FNB":"FNBSA", "StandardBank":"StandardBankZA OR \"Standard Bank\" OR \"standard bank\"","Nedbank":"Nedbank OR nedbank","ABSA": "Absa OR ABSA OR absa OR AbsaSouthAfrica","Capitec":"CapitecBankSA OR Capitec or capitec"}
-if runit
+if runit:
+   twintConfigure()
+   Run_Twint()
    st.dataframe(tweets_df[["cleaned_tweet","polarity","Sentiment"]])
 else
  pass
