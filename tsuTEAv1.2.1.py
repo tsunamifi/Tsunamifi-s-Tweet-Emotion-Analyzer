@@ -24,7 +24,7 @@ import streamlit as st
 import pandas as pd
 
 import nest_asyncio
-loop = asyncio.new_event_loop()
+loop = nest_asyncio.new_event_loop()
 nest_asyncio.apply()
 
 ### matplot helps us visualize data too.
