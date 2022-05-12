@@ -103,7 +103,7 @@ else:
     pass
 #for compatibility issues with twint
 
-def twintConfig
+def twintConfig():
 c = twint.Config()
     c.Search = texti
     c.Limit = numberi
