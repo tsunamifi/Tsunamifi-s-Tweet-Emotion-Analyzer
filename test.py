@@ -1,79 +1,115 @@
-import streamlit as st
-import twint
-import pandas as pd
-import asyncio
-loop = asyncio.new_event_loop()
-asyncio.set_event_loop(loop)             
-import matplotlib.pyplot as plt
 
-#optional: for reading and concatenation of previous files
-import glob                     
-import os
-
-import numpy as np
-import datetime as dt
-
-#cleaning
-import re
-from nltk.tokenize import WordPunctTokenizer
-from nltk.corpus import stopwords             
-
-# Sentiment Analysis
-from textblob import TextBlob
-
-#word cloud
-from wordcloud import WordCloud
 
 """### Configure and run Twint (twitter scrapper)"""
+# Commented out IPython magic to ensure Python compatibility.
+#core setup.
 
-#for compatibility issues with twint
-runit = st.button('run')
-bank_search = {"FNB":"FNBSA", "StandardBank":"StandardBankZA OR \"Standard Bank\" OR \"standard bank\"","Nedbank":"Nedbank OR nedbank","ABSA": "Absa OR ABSA OR absa OR AbsaSouthAfrica","Capitec":"CapitecBankSA OR Capitec or capitec"}
-if runit:
-   twintConfigure()
-   Run_Twint()
-   st.dataframe(tweets_df[["cleaned_tweet","polarity","Sentiment"]])
+
+##importing things here!
+import streamlit as st
+### pandas helps us chart and sort data, we'll need it if you want to see results.
+import pandas as pd
+
+import asyncio
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+
+### matplot helps us visualize data too.
+import matplotlib.pyplot as plt
+
+### ntlk is a word processing library, we can use it to parse our tweets for our goal.
+import nltk
+from wordcloud import WordCloud,STOPWORDS
+nltk.download('punkt')   
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
+
+
+
+### twint is a twitter python library/api to scrape tweets; this is how we'll be able to source our tweets.
+### textblob is a text processing library.
+import re
+import twint
+from textblob import TextBlob
+
+### display is so we can display a dataframe from pandas or something else.
+from IPython.display import display
+
+
+st.set_page_config(layout="wide")
+st.title("Tsunamifi's Twitter Sentiment Analysis Bot")
+st.write("This WebAPP will allow you to plug in a topic from twitter and determine if their tweets are Positive, Negative or Neutral")
+
+
+with st.form(key='vars'):
+        texti = st.text_input(label='Choose topic')
+        numberi = st.number_input(label= 'How many tweets should we source?')
+        submit = st.form_submit_button(label='Submit')
+        
+# inner workings
+## we're gonna grab this x amount of tweets to parse
+
+st.title("Choose Topic on twitter to analyze")
+#st.write("You're welcome to use both a user and topic but both at the same time are not required, you can use one or the other too if you'd like.")
+
+
+# Take off...
+
+
+
+        
+def run():
+
+ ## sort and grab percentages between each type
+ ## of tweet with pandas..
+
+ ### dropping duplicate tweets too..
+ 
+                                           
+ ptweets = tweetsdf[tweetdf['result'] == 'Positive']
+ posper = (100*len(ptweets)/len(tweets))
+ st.write(f'Positive tweets {posper} %')
+  
+ ntweets = tweetsdf[tweetdf['result'] == 'Negative']
+ negper = (100*len(ntweets)/len(tweets))
+ st.write(f'Negative tweets {negper} %')
+       
+ nuper = (100 - posper - negper)
+ st.write(f'Neutral tweets {nuper} %')
+   
+ st.dataframe(tweetsdf)
+ tweetsdf[['tweets','tweets(cleaned)','result']].st.dataframe()
+ wcloud = st.checkbox(label='Generate word cloud')
+
+ twt = " ".join(df['clean_tweets'])
+ wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
+
+ if wcloud:
+   plt.show()
+   st.pyplot(wordcloud)
+ else:
+    pass
+
+ plt.figure(1,figsize=(8, 8))
+ plt.axis('off')
+ plt.imshow(wordcloud)
+
+if submit:
+    twintConfig()
+    st.dataframe(tweets_df)
 else:
- pass
-def twintConfig(date_from,date_to, search_string):
-    c = twint.Config()
-    c.Search = search_string[1]
-    c.Since = date_from
-    c.Until = date_to
+    pass
+#for compatibility issues with twint
+
+def twintConfig
+c = twint.Config()
+    c.Search = texti
+    c.Limit = numberi
     c.Pandas = True
-    c. Pandas_au = True          
-    c.Pandas_clean=True
-    #c.Hide_output = True
-    #c.Resume = "./ResumeID/resume_id_"+search_string[0]+".txt"
+    c.Lang = "en"
     twint.run.Search(c)
-
-"""### Run twint"""
-
-since = input("Input a start date eg 2021-09-17: ")
-until = input("Input an end date eg 2021-09-18: ")
-
-def Run_Twint(search_vals):
-    
-    #set empty dataframe for join
-    out_df= pd.DataFrame()
-    
-    for bank in search_vals.items():
-        print ("running for search item: "+bank[0]+"\n")
-        print ("Search string: "+bank[1]+"\n")
-        
-        #run twint
-        twintConfig(since,until, bank)
-        
-        #get dataframe
-        tweets_df = twint.storage.panda.Tweets_df
-        
-        #join Dataframes and create 'Bank' column
-        tweets_df["Bank"]= bank[0]
-        out_df = pd.concat([out_df,tweets_df])
-        
-    return out_df
-
-tweets_df = Run_Twint(bank_search)
 
 """# precleaning"""
 
@@ -177,3 +213,4 @@ tweets_df["cleaned_tweet"].head()
 #         tweets_df.at[row[0], 'Sentiment'] = "Neutral"
 
 tweets_df[["cleaned_tweet","polarity","Sentiment"]].head(5)
+st.dataframe(tweets_df)
