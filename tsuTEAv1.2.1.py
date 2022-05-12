@@ -90,12 +90,13 @@ def root(text):
     
 # lets find out the cleaned tweets' emotion!
 def get_tweet_score(analysis):
+    scored_tweet = get_tweet_score(stem_tweet)
   #  tweetsdf.at[row[0], 'polarity'] = analysis.sentiment[0]
   # tweetsdf.at[row[0], 'subjectivity'] = analysis.sentiment[1]
     ##then scores the tweet
-  if analysis.sentiment.polarity > 0:
+  if scored_tweet.sentiment.polarity > 0:
       return 'positive'
-  elif analysis.sentiment.polarity < 0:
+  elif scored_tweet.sentiment.polarity < 0:
       return 'negative'
   else:
       return 'neutral'
