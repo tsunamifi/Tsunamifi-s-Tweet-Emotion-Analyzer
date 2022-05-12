@@ -131,7 +131,7 @@ def fetch_tweets():
          scored_tweet = get_tweet_score(stem_tweet)
          tweets.append((parsed_tweet, clean_tweet, scored_tweet))
          return tweets
-         except
+except:
             print("Error")
 
 st.title("Choose Topic on twitter to analyze")
