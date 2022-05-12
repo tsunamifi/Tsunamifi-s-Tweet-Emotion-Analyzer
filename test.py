@@ -110,7 +110,7 @@ def twintConfig():
     c.Pandas = True
     c.Lang = "en"
     twint.run.Search(c)
-
+    tweets_df = twint.storage.panda.Tweets_df
 """# precleaning"""
 
 tweets_df.shape
