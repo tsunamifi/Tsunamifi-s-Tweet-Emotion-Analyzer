@@ -55,6 +55,9 @@ st.set_page_config(layout="wide")
 st.title("Tsunamifi's Twitter Sentiment Analysis Bot")
 st.write("This WebAPP will allow you to plug in a topic from twitter and determine if their tweets are Positive, Negative or Neutral.")
 
+global tweets
+tweets = []
+
 # this will clean unnecessary and maybe complicated things out of a tweet
 # like links or #'s 
 def cleanup(text):
@@ -109,7 +112,6 @@ with st.form(key='vars'):
 # inner workings
 ## we're gonna grab this x amount of tweets to parse
 def fetch_tweets():
-    global tweets
     tweets = []
 
     c = twint.Config()
