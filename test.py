@@ -191,7 +191,7 @@ tweets_df["cleaned_tweet"].head()
 """## Sentiment analysis (TextBlob)"""
 
 # Commented out IPython magic to ensure Python compatibility.
- print("Running sentiment process")
+print("Running sentiment process")
 for row in tweets_df.itertuples():
     tweet = tweets_df.at[row[0], 'cleaned_tweet']
  
