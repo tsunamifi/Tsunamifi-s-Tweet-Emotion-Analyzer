@@ -1,5 +1,4 @@
 streamlit
-twint==2.1.21
 nltk
 pandas
 textblob
@@ -17,3 +16,4 @@ schedule
 geopy
 fake-useragent
 py-googletransx
+git+https://github.com/twintproject/twint.git@origin/master#egg=twint
