@@ -152,6 +152,7 @@ def run():
  ## of tweet with pandas..
 
  ### dropping duplicate tweets too..
+ nonlocal tweetsdf
  analysis = tweetsdf['tweets(cleaned)']
  tweetsdf.at[row[0], 'polarity'] = analysis.sentiment[0]
  tweetsdf.at[row[0], 'subjectivity'] = analysis.sentiment[1]
