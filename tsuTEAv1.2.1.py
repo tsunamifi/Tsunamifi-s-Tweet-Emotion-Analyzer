@@ -23,9 +23,9 @@ import streamlit as st
 ### pandas helps us chart and sort data, we'll need it if you want to see results.
 import pandas as pd
 
-import nest_asyncio
-loop = nest_asyncio.new_event_loop()
-nest_asyncio.apply()
+import asyncio
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
 
 ### matplot helps us visualize data too.
 import matplotlib.pyplot as plt
