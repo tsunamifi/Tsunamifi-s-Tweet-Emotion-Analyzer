@@ -181,8 +181,7 @@ def clean_text(text):
     return text.strip()
 
 # Commented out IPython magic to ensure Python compatibility.
-# %%time
-# tweets_df["cleaned_tweet"] = tweets_df["tweet"].apply(clean_text)
+tweets_df["cleaned_tweet"] = tweets_df["tweet"].apply(clean_text)
 
 #drop empty rows
 tweets_df = tweets_df [ ~(tweets_df["tweet"] =="")]
@@ -192,7 +191,6 @@ tweets_df["cleaned_tweet"].head()
 """## Sentiment analysis (TextBlob)"""
 
 # Commented out IPython magic to ensure Python compatibility.
-%%time
  print("Running sentiment process")
 for row in tweets_df.itertuples():
     tweet = tweets_df.at[row[0], 'cleaned_tweet']
