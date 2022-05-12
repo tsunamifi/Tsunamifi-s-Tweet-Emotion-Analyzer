@@ -152,7 +152,7 @@ def run():
  ## of tweet with pandas..
 
  ### dropping duplicate tweets too..
- analysis = scored_tweet
+ analysis = tweetsdf['tweets(cleaned)']
  tweetsdf.at[row[0], 'polarity'] = analysis.sentiment[0]
  tweetsdf.at[row[0], 'subjectivity'] = analysis.sentiment[1]
  if analysis.sentiment[0]>0:
