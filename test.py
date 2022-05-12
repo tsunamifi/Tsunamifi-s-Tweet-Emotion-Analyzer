@@ -196,18 +196,18 @@ for row in tweets_df.itertuples():
     tweet = tweets_df.at[row[0], 'cleaned_tweet']
  
      #run sentiment using TextBlob
-     analysis = TextBlob(tweet)
+analysis = TextBlob(tweet)
  
      #set value to dataframe
-     tweets_df.at[row[0], 'polarity'] = analysis.sentiment[0]
-     tweets_df.at[row[0], 'subjectivity'] = analysis.sentiment[1]
+tweets_df.at[row[0], 'polarity'] = analysis.sentiment[0]
+tweets_df.at[row[0], 'subjectivity'] = analysis.sentiment[1]
  
      #Create Positive / negative column depending on polarity
-     if analysis.sentiment[0]>0:
+if analysis.sentiment[0]>0:
          tweets_df.at[row[0], 'Sentiment'] = "Positive"
-     elif analysis.sentiment[0]<0:
+elif analysis.sentiment[0]<0:
          tweets_df.at[row[0], 'Sentiment'] = "Negative"
-     else:
+else:
          tweets_df.at[row[0], 'Sentiment'] = "Neutral"
 
 tweets_df[["cleaned_tweet","polarity","Sentiment"]].head(5)
