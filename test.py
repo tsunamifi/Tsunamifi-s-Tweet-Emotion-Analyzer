@@ -33,7 +33,7 @@ if runit:
    twintConfigure()
    Run_Twint()
    st.dataframe(tweets_df[["cleaned_tweet","polarity","Sentiment"]])
-else
+else:
  pass
 def twintConfig(date_from,date_to, search_string):
     c = twint.Config()
