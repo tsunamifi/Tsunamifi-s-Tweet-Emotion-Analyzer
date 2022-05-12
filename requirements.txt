@@ -15,6 +15,6 @@ aiohttp_socks
 schedule
 geopy
 fake-useragent
-py-googletransx
+googletransx
 git+https://github.com/twintproject/twint.git@origin/master#egg=twint
 nest_asyncio
