@@ -125,7 +125,7 @@ def fetch_tweets():
                                            
 
 
-     for row in tweetsdf.intertuples():
+    for row in tweetsdf.intertuples():
          parsed_tweet = tweetsdf.at[row[0], 'tweets(cleaned)']
          stem_tweet = TextBlob(root(parsed_tweet))
          scored_tweet = get_tweet_score(stem_tweet)
