@@ -103,18 +103,17 @@ def fetch_tweets(search_query, max_results = 50):
     ### empty list to hold tweets
     tweets = []  
 
-    try:
-      collected_tweets = client.search_recent_tweets(query=search_query, max_results=20)
-      for tweet in collected_tweets:
+    
+    collected_tweets = client.search_recent_tweets(query=search_query, max_results=20)
+    for tweet in collected_tweets:
         parsed_tweet = tweet.text
         clean_tweet = cleanup(parsed_tweet)
         stem_tweet = TextBlob(root(clean_tweet))
         scored_tweet = get_tweet_score(stem_tweet)
         tweets.append((parsed_tweet, clean_tweet, scored_tweet))
-        return tweets
-    except:
-      print("Error")
-      exit(1)
+    return tweets
+    
+      
 
 st.title("Choose Topic on twitter to analyze")
 #st.write("You're welcome to use both a user and topic but both at the same time are not required, you can use one or the other too if you'd like.")
