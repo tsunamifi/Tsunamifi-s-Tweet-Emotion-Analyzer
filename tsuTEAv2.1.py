@@ -60,7 +60,7 @@ with st.form(key='vars'):
         numberi = st.number_input(label= 'How many tweets should we source?')
         submit = st.form_submit_button(label='Submit')
 
-class TEA
+class TEA:
 
 def __init__(self):
     c = twint.Config()
