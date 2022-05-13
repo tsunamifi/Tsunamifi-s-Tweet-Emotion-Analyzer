@@ -59,21 +59,21 @@ with st.form(key='vars'):
         texti = st.text_input(label='Choose topic')
         numberi = st.number_input(label= 'How many tweets should we source?')
         submit = st.form_submit_button(label='Submit')
-        
-c = twint.Config()
-c.Search = texti
-c.Limit = numberi
-c.Pandas = True
-c.Lang = "en"
+def searchseq():        
+  c = twint.Config()
+  c.Search = texti
+  c.Limit = numberi
+  c.Pandas = True
+  c.Lang = "en"
 
 #compatibility for twint
-loop = asyncio.new_event_loop()
-asyncio.set_event_loop(loop)
+  loop = asyncio.new_event_loop()
+  asyncio.set_event_loop(loop)
 
-twint.run.Search(c)
+  twint.run.Search(c)
    
-tweetsdf = twint.storage.panda.Tweets_df
-  
+  tweetsdf = twint.storage.panda.Tweets_df
+  return tweetsdf
 
 
 # this will clean unnecessary and maybe complicated things out of a tweet
