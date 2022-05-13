@@ -112,8 +112,8 @@ def fetch_tweets(search_query, max_results = 50):
         scored_tweet = get_tweet_score(stem_tweet)
         tweets.append((parsed_tweet, clean_tweet, scored_tweet))
         return tweets
-    except tweepy.TweepError as e:
-      print("Error : " + str(e))
+    except 
+      print("Error")
       exit(1)
 
 st.title("Choose Topic on twitter to analyze")
