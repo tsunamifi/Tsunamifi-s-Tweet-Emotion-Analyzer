@@ -18,4 +18,4 @@ fake-useragent
 googletransx
 git+https://github.com/twintproject/twint.git@origin/master#egg=twint
 nest_asyncio
-tweepy==3.10.0
+tweepy==4.9.0
