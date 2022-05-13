@@ -105,13 +105,25 @@ def get_tweets(search_query, max_results):
     result = client.search_recent_tweets(query=search_query, tweet_fields=['conversation_id', 'created_at','author_id'], max_results=max_results)
     
     return result
-    result = get_tweets(search_query=texti, max_results=numberi)   
 
+    df = pd.DataFrame(result, columns= ['created_at', 'username', 'tweets', 'results'])
+
+  
+ ### dropping duplicate tweets too..
  
+    df["tweetsC"] = df["tweets"].apply(cleanup) 
+    df["tweetsC"] = df["tweets"].apply(root)
+    df = df.drop_duplicates(subset='tweetsC')
+    df.to_csv('tweetbank.csv', index= False)
+      
+  # lets find out the cleaned tweets' emotion!
+    df["polarity"] = df["tweetsC"].apply(lambda x: TextBlob(x).sentiment[0]) 
+    df["result"] = df["polarity"].apply(lambda x: 'Positive' if x > 0 else('negative' if x<0 else 'neutral'))
 
 
 
 
+result = get_tweets(search_query=texti, max_results=numberi)   
 
 
 def print():
