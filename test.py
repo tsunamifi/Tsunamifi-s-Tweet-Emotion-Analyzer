@@ -65,11 +65,11 @@ def get_tweets(search_query, max_results):
 
 
 
-search_query = 'from:CyBearNanook -is:retweet (#JohnsonOut109)'
-result = get_tweets(search_query=search_query, max_results=11)
+#search_query = 'from:CyBearNanook -is:retweet (#JohnsonOut109)'
+result = get_tweets(search_query=texti, max_results=numberi)
 
-
-for data in result.data:
+def print()
+  for data in result.data:
     # print(data)
     tweet_id = data.id
     conversation_id = data.conversation_id
@@ -105,6 +105,6 @@ with st.form(key='vars'):
         submit = st.form_submit_button(label='Submit')
         
 if submit:
-    get_tweets()
+    print()
 else:
     pass
