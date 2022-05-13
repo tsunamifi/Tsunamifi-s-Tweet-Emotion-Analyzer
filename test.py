@@ -98,15 +98,17 @@ def get_username(user_id):
 
 
 def get_tweets(search_query, max_results):
-    tweets = []
+    
     # The tweet.fields query parameters [attachments,author_id,context_annotations,conversation_id,created_at,entities,
     # geo,id,in_reply_to_user_id,lang,non_public_metrics,organic_metrics,possibly_sensitive,promoted_metrics,public_metrics,
     # referenced_tweets,reply_settings,source,text,withheld]
     collected_tweets = client.search_recent_tweets(query=search_query, tweet_fields=['conversation_id', 'created_at','author_id'], max_results=max_results)
-    tweets = get_tweets(search_query=texti, max_results=numberi)
+    
     return collected_tweets
-    df = pd.DataFrame(tweets, columns= ['created_at', 'username', 'tweets', 'result'])
+    collected_tweets = get_tweets(search_query=texti, max_results=numberi)   
+    df = pd.DataFrame(collected_tweets, columns= ['created_at', 'username', 'tweets', 'results'])
 
+  
  ### dropping duplicate tweets too..
  
     df["tweetsC"] = df["tweets"].apply(cleanup) 
