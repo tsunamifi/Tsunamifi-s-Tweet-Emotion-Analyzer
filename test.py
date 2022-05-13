@@ -68,7 +68,7 @@ def get_tweets(search_query, max_results):
 #search_query = 'from:CyBearNanook -is:retweet (#JohnsonOut109)'
 result = get_tweets(search_query=texti, max_results=numberi)
 
-def print()
+def print():
   for data in result.data:
     # print(data)
     tweet_id = data.id
