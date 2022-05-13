@@ -115,11 +115,11 @@ tweetsdf["tweetsC"] = tweetsdf["tweet"].apply(root)
 tweetsdf["polarity"] = tweetsdf["tweetsC"].apply(lambda x: TextBlob(x).sentiment[0]) 
 tweetsdf["result"] = tweetsdf["polarity"].apply(lambda x: 'Positive' if x > 0 else('negative' if x<0 else 'neutral'))
               
-
+asyncio.set_event_loop(asyncio.new_event_loop())
 
 # Take off...        
 def run():
-                                          
+ asyncio.set_event_loop(asyncio.new_event_loop())                                         
  ptweets = tweetsdf[tweetdf['result'] == 'Positive']
  posper = (100*len(ptweets)/len(tweets))
  st.write(f'Positive tweets {posper} %')
