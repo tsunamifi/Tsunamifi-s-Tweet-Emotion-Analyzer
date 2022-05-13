@@ -45,9 +45,6 @@ import re
 import twint
 from textblob import TextBlob
 
-#compatibility for twint
-loop = asyncio.new_event_loop()
-asyncio.set_event_loop(loop)
 
 # streamlit formatting
 st.set_page_config(layout="wide")
@@ -66,6 +63,11 @@ c.Search = texti
 c.Limit = numberi
 c.Pandas = True
 c.Lang = "en"
+
+#compatibility for twint
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+
 twint.run.Search(c)
    
 tweetsdf = twint.storage.panda.Tweets_df
