@@ -103,12 +103,12 @@ def root(text):
 tweetsdf = tweetsdf.drop_duplicates(subset=['date', 'tweet'])
 tweetsdf.reset_index(inplace=True)
 tweetsdf.drop("index",axis =1,inplace=True  
-tweetsdf['tweets(cleaned)'] = tweetsdf['tweet'].apply(cleanup)] 
-tweetsdf['tweets(cleaned)'] = tweetsdf['tweet'].apply(root)] 
+tweetsdf['tweetsC'] = tweetsdf['tweet'].apply(cleanup)] 
+tweetsdf['tweetsC'] = tweetsdf['tweet'].apply(root)] 
 
       
 # lets find out the cleaned tweets' emotion!
-tweetsdf['polarity'] = tweetsdf['tweets(cleaned)'].apply(lambda x: TextBlob(x).sentiment[0]) 
+tweetsdf['polarity'] = tweetsdf['tweetsC'].apply(lambda x: TextBlob(x).sentiment[0]) 
 tweetsdf['result'] = tweetsdf['polarity'].apply(lambda x: 'Positive' if x > 0 else('negative' if x<0 else 'neutral'))
               
 
