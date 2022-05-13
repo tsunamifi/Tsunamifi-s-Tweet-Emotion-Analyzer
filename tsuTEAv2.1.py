@@ -59,6 +59,7 @@ with st.form(key='vars'):
         texti = st.text_input(label='Choose topic')
         numberi = st.number_input(label= 'How many tweets should we source?')
         submit = st.form_submit_button(label='Submit')
+global tweetsdf
 def searchseq():        
   c = twint.Config()
   c.Search = texti
