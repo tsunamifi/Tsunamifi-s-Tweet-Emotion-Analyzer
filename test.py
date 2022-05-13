@@ -127,7 +127,7 @@ def get_tweets(search_query, max_results):
 
 
 def print():
-  for data in collected_tweets.data:
+  for data in result.data:
     # print(data)
     tweet_id = data.id
     conversation_id = data.conversation_id
