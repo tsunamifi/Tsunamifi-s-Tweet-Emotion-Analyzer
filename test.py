@@ -39,6 +39,11 @@ st.set_page_config(layout="wide")
 st.title("Tsunamifi's Twitter Sentiment Analysis Bot")
 st.write("This WebAPP will allow you to plug in a topic from twitter and determine if their tweets are Positive, Negative or Neutral.")
 
+
+with st.form(key='vars'):
+        texti = st.text_input(label='Choose topic')
+        numberi = st.number_input(label= 'How many tweets should we source?')
+        submit = st.form_submit_button(label='Submit')
 # defining twitter auth setup here!
 # from config import bearer_token
 
@@ -98,11 +103,6 @@ st.title("Choose Topic on twitter to analyze")
 
 # Take off...
 
-
-with st.form(key='vars'):
-        texti = st.text_input(label='Choose topic')
-        numberi = st.number_input(label= 'How many tweets should we source?')
-        submit = st.form_submit_button(label='Submit')
         
 if submit:
     print()
