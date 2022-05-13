@@ -112,19 +112,6 @@ def get_tweets(search_query, max_results):
 
 
 result = get_tweets(search_query=texti, max_results=numberi)   
-df = pd.DataFrame(result, columns= ['created_at', 'username', 'tweets', 'results'])
-
-  
- ### dropping duplicate tweets too..
- 
-df["tweetsC"] = df["tweets"].apply(cleanup) 
-df["tweetsC"] = df["tweets"].apply(root)
-df = df.drop_duplicates(subset='tweetsC')
-df.to_csv('tweetbank.csv', index= False)
-      
-  # lets find out the cleaned tweets' emotion!
-df["polarity"] = df["tweetsC"].apply(lambda x: TextBlob(x).sentiment[0]) 
-df["result"] = df["polarity"].apply(lambda x: 'Positive' if x > 0 else('negative' if x<0 else 'neutral'))
 
 def print():
   for data in result.data:
@@ -149,6 +136,19 @@ def print():
           #f"Public metrics: {public_metrics}\n",
           #f"Source: {source}")
     # print("-" * 80)     
+    df = pd.DataFrame(result, columns= ['created_at', 'username', 'tweets', 'results'])
+
+  
+ ### dropping duplicate tweets too..
+ 
+    df["tweetsC"] = df["tweets"].apply(cleanup) 
+    df["tweetsC"] = df["tweets"].apply(root)
+    df = df.drop_duplicates(subset='tweetsC')
+    df.to_csv('tweetbank.csv', index= False)
+      
+  # lets find out the cleaned tweets' emotion!
+    df["polarity"] = df["tweetsC"].apply(lambda x: TextBlob(x).sentiment[0]) 
+    df["result"] = df["polarity"].apply(lambda x: 'Positive' if x > 0 else('negative' if x<0 else 'neutral'))
     
 
     ptweets = df[df['result'] == 'positive']
