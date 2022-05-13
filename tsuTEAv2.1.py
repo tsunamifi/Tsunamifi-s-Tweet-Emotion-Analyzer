@@ -96,7 +96,7 @@ def root(text):
    token_words = word_tokenize(text)
    root_sentence = []
    for word in token_words:
-   root_sentence.append(porter.stem(word))
+      root_sentence.append(porter.stem(word))
    return " ".join(root_sentence)
 
 # dropping duplicate tweets & then cleaning them too.. 
