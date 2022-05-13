@@ -24,8 +24,6 @@ import streamlit as st
 import pandas as pd
 
 import asyncio
-loop = asyncio.new_event_loop()
-asyncio.set_event_loop(loop)
 
 ### matplot helps us visualize data too.
 import matplotlib.pyplot as plt
@@ -46,6 +44,10 @@ from nltk.stem import PorterStemmer
 import re
 import twint
 from textblob import TextBlob
+
+#compatibility for twint
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
 
 # streamlit formatting
 st.set_page_config(layout="wide")
