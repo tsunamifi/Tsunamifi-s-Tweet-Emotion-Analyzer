@@ -39,7 +39,8 @@ st.set_page_config(layout="wide")
 st.title("Tsunamifi's Twitter Sentiment Analysis Bot")
 st.write("This WebAPP will allow you to plug in a topic from twitter and determine if their tweets are Positive, Negative or Neutral.")
 
-
+st.title("Choose Topic on twitter to analyze")
+#st.write("You're welcome to use both a user and topic but both at the same time are not required, you can use one or the other too if you'd like.")
 with st.form(key='vars'):
         texti = st.text_input(label='Choose topic')
         numberi = st.number_input(label= 'How many tweets should we source?', step=1)
@@ -51,6 +52,45 @@ with st.form(key='vars'):
 bearer_token = "AAAAAAAAAAAAAAAAAAAAAHbwcAEAAAAAA3Heaep4TEp0EOTiUpPnTPLy9A4%3DspSy2AYLMulUovSsOjv9AT99T2GBnyJDmaPV7YzOXrvbHtJPWH"
 client = tweepy.Client(bearer_token=bearer_token)
 
+# this will clean unnecessary and maybe complicated things out of a tweet
+# like links or #'s 
+def cleanup(text):
+
+     ## replaces all letters and numbers associated with chars like "\/:"
+     ## (which are chars used in links) with spaces which removes them.
+     ## we're also tokenizing each word here
+      text = text.lower()
+      text = re.sub('(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)', ' ', text)
+  
+      text_tokens = word_tokenize(text)
+      text = [word for word in text_tokens if not word in stopwords.words()]
+
+      text = ' '.join(text)
+      return text
+
+# here we're getting rid of parts of words that dont mean anything
+# in sentiment analysis so we'll end up with just scoring rootwords
+def root(text):
+
+  porter = PorterStemmer()
+  token_words = word_tokenize(text)
+  root_sentence = []
+  for word in token_words:
+    root_sentence.append(porter.stem(word))
+  return " ".join(root_sentence)    
+    
+    
+# lets find out the cleaned tweets' emotion!
+def get_tweet_score(analysis):
+
+    ##then scores the tweet
+    if analysis.sentiment.polarity > 0:
+      return 'positive'
+    elif analysis.sentiment.polarity < 0:
+      return 'negative'
+    else:
+      return 'neutral'
+
 # Get user information..
 def get_username(user_id):
     result = client.get_user(id=user_id, user_fields=['username'])
@@ -58,20 +98,24 @@ def get_username(user_id):
 
 
 def get_tweets(search_query, max_results):
+    tweets = []
     # The tweet.fields query parameters [attachments,author_id,context_annotations,conversation_id,created_at,entities,
     # geo,id,in_reply_to_user_id,lang,non_public_metrics,organic_metrics,possibly_sensitive,promoted_metrics,public_metrics,
     # referenced_tweets,reply_settings,source,text,withheld]
-    result = client.search_recent_tweets(query=search_query,
-                                         tweet_fields=['conversation_id', 'context_annotations', 'created_at',
-                                                       'author_id',
-                                                       'public_metrics', 'lang', 'source'],
-                                         max_results=max_results)
-    return result
+    collected_tweets = client.search_recent_tweets(query=search_query, tweet_fields=['conversation_id', 'created_at',
+                                                       'author_id'], max_results=max_results)
+    for tweet in collected_tweets:
+        parsed_tweet = tweet.text
+        clean_tweet = cleanup(parsed_tweet)
+        stem_tweet = TextBlob(root(clean_tweet))
+        scored_tweet = get_tweet_score(stem_tweet)
+        tweets.append((parsed_tweet, clean_tweet, scored_tweet))
+        return tweets  
 
 
 
-#search_query = 'from:CyBearNanook -is:retweet (#JohnsonOut109)'
-result = get_tweets(search_query=texti, max_results=numberi)
+
+tweets = get_tweets(search_query=texti, max_results=numberi)
 
 def print():
   for data in result.data:
@@ -86,19 +130,49 @@ def print():
     source = data.source
     public_metrics = data.public_metrics
     # print("\n" + "-" * 80)
-    st.write(f"Tweet ID: {tweet_id}\n"
-          f"Conversation ID: {conversation_id}\n"
-          f"Author ID: {author_id}\n"
-          f"Username: {username}\n"
-          f"Created at: {created_at}\n"
-          f"Language: {lang}\n"
-          f"Tweet: {tweet}\n"
-          f"Public metrics: {public_metrics}\n",
-          f"Source: {source}")
+    #st.write(f"Tweet ID: {tweet_id}\n"
+     #     f"Conversation ID: {conversation_id}\n"
+      #    f"Author ID: {author_id}\n"
+       #   f"Username: {username}\n"
+        #  f"Created at: {created_at}\n"
+         # f"Language: {lang}\n"
+          #f"Tweet: {tweet}\n"
+          #f"Public metrics: {public_metrics}\n",
+          #f"Source: {source}")
     # print("-" * 80)     
+    df = pd.DataFrame(tweets, columns= ['created_at', 'username', 'tweets', 'result'])
 
-st.title("Choose Topic on twitter to analyze")
-#st.write("You're welcome to use both a user and topic but both at the same time are not required, you can use one or the other too if you'd like.")
+ ### dropping duplicate tweets too..
+ df = df.drop_duplicates(subset='tweetsc')
+ df.to_csv('tweetbank.csv', index= False)
+
+ ptweets = df[df['result'] == 'positive']
+ posper = (100*len(ptweets)/len(tweets))
+ st.write(f'Positive tweets {posper} %')
+  
+ ntweets = df[df['result'] == 'negative']
+ negper = (100*len(ntweets)/len(tweets))
+ st.write(f'Negative tweets {negper} %')
+       
+ nuper = (100 - posper - negper)
+ st.write(f'Neutral tweets {nuper} %')
+   
+ st.dataframe(df)
+
+ wcloud = st.checkbox(label='Generate word cloud')
+
+ twt = " ".join(df['tweetsc'])
+ wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
+
+ if wcloud:
+   plt.show()
+   st.pyplot(wordcloud)
+ else:
+    pass
+
+ plt.figure(1,figsize=(8, 8))
+ plt.axis('off')
+ plt.imshow(wordcloud)
 
 
 # Take off...
