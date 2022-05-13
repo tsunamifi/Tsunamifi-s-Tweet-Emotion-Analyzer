@@ -42,7 +42,7 @@ st.write("This WebAPP will allow you to plug in a topic from twitter and determi
 
 with st.form(key='vars'):
         texti = st.text_input(label='Choose topic')
-        numberi = st.number_input(label= 'How many tweets should we source?')
+        numberi = st.number_input(label= 'How many tweets should we source?', step=1)
         submit = st.form_submit_button(label='Submit')
 # defining twitter auth setup here!
 # from config import bearer_token
