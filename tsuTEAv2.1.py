@@ -65,8 +65,7 @@ c.Pandas = True
 c.Lang = "en"
 
 #compatibility for twint
-loop = asyncio.new_event_loop()
-asyncio.set_event_loop(loop)
+asyncio.set_event_loop(asyncio.new_event_loop())
 
 twint.run.Search(c)
    
