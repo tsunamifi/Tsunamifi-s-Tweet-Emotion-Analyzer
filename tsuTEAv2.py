@@ -47,15 +47,28 @@ import re
 import twint
 from textblob import TextBlob
 
-### display is so we can display a dataframe from pandas or something else.
-from IPython.display import display
-
-
+# streamlit formatting
 st.set_page_config(layout="wide")
 st.title("Tsunamifi's Twitter Sentiment Analysis Bot")
 st.write("This WebAPP will allow you to plug in a topic from twitter and determine if their tweets are Positive, Negative or Neutral")
+st.title("Choose Topic on twitter to analyze")
+#st.write("You're welcome to use both a user and topic but both at the same time are not required, you can use one or the other too if you'd like.")
 
-global scored_tweet
+with st.form(key='vars'):
+        texti = st.text_input(label='Choose topic')
+        numberi = st.number_input(label= 'How many tweets should we source?')
+        submit = st.form_submit_button(label='Submit')
+        
+c = twint.Config()
+c.Search = texti
+c.Limit = numberi
+c.Pandas = True
+c.Lang = "en"
+twint.run.Search(c)
+   
+tweetsdf = twint.storage.panda.Tweets_df
+  
+
 
 # this will clean unnecessary and maybe complicated things out of a tweet
 # like links or #'s 
@@ -65,8 +78,7 @@ def cleanup(text):
      ## (which are chars used in links) with spaces which removes them.
      ## we're also tokenizing each word here
         
-       
-      text = text.lower()
+      parsed_tweet = text
       
       text = re.sub('(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)', ' ', text)
   
@@ -74,95 +86,36 @@ def cleanup(text):
       text = [word for word in text_tokens if not word in stopwords.words()]
 
       text = ' '.join(text)
-      return text.strip()
+      return text
 
-    
-    
 # here we're getting rid of parts of words that dont mean anything
 # in sentiment analysis so we'll end up with just scoring rootwords
 def root(text):
 
-  porter = PorterStemmer()
-  token_words = word_tokenize(text)
-  root_sentence = []
-  for word in token_words:
-    root_sentence.append(porter.stem(word))
-  return " ".join(root_sentence)    
-    
-    
+   porter = PorterStemmer()
+   token_words = word_tokenize(text)
+   root_sentence = []
+   for word in token_words:
+   root_sentence.append(porter.stem(word))
+   return " ".join(root_sentence)
+
+# dropping duplicate tweets & then cleaning them too.. 
+tweetsdf = tweetsdf.drop_duplicates(subset=['date', 'tweet'])
+tweetsdf.reset_index(inplace=True)
+tweetsdf.drop("index",axis =1,inplace=True  
+tweetsdf['tweets(cleaned)'] = tweetsdf['tweet'].apply(cleanup)] 
+tweetsdf['tweets(cleaned)'] = tweetsdf['tweet'].apply(root)] 
+
+      
 # lets find out the cleaned tweets' emotion!
-def get_tweet_score(analysis):
-   
-  
-    ##then scores the tweet
-    if analysis.sentiment.polarity > 0:
-      return 'positive'
-    elif analysis.sentiment.polarity < 0:
-      return 'negative'
-    else:
-      return 'neutral'
-
-with st.form(key='vars'):
-        texti = st.text_input(label='Choose topic')
-        numberi = st.number_input(label= 'How many tweets should we source?')
-        submit = st.form_submit_button(label='Submit')
-        
-# inner workings
-## we're gonna grab this x amount of tweets to parse
-def fetch_tweets():
-    tweets = []
-
-    c = twint.Config()
-    c.Search = texti
-    c.Limit = numberi
-    c.Pandas = True
-    c.Lang = "en"
-    twint.run.Search(c)
-   
-    tweetsdf = twint.storage.panda.Tweets_df 
-    tweetsdf = tweetsdf.drop_duplicates(subset=['date', 'tweet'])
-    tweetsdf.reset_index(inplace=True)
-    tweetsdf.drop("index",axis =1,inplace=True)
-    try:
-      tweetsdf['tweets(cleaned)'] = tweetsdf['tweet'.apply(cleanup)]
-                                           
+tweetsdf['polarity'] = tweetsdf['tweets(cleaned)'].apply(lambda x: TextBlob(x).sentiment[0]) 
+tweetsdf['result'] = tweetsdf['polarity'].apply(lambda x: 'Positive' if x > 0 else('negative' if x<0 else 'neutral'))
+              
 
 
-      for row in tweetsdf.intertuples():
-         parsed_tweet = tweetsdf.at[row[0], 'tweets(cleaned)']
-         stem_tweet = TextBlob(root(parsed_tweet))
-         scored_tweet = get_tweet_score(stem_tweet)
-         tweets.append((parsed_tweet, clean_tweet, scored_tweet))
-         return tweetsdf
-    except:
-      print('Error')
-
-st.title("Choose Topic on twitter to analyze")
-#st.write("You're welcome to use both a user and topic but both at the same time are not required, you can use one or the other too if you'd like.")
-
-
-# Take off...
-
-
-
-        
+# Take off...        
 def run():
-
- ## sort and grab percentages between each type
- ## of tweet with pandas..
-
- ### dropping duplicate tweets too..
- nonlocal tweetsdf
- analysis = tweetsdf['tweets(cleaned)']
- tweetsdf.at[row[0], 'polarity'] = analysis.sentiment[0]
- tweetsdf.at[row[0], 'subjectivity'] = analysis.sentiment[1]
- if analysis.sentiment[0]>0:
-     tweetsdf.at[row[0], 'result'] = "Positive"
- elif analysis.sentiment[0]<0:
-     tweetsdf.at[row[0], 'result'] = "Negative"
- else:
-     tweetsdf.at[row[0], 'result'] = "Neutral"
-                                           
+                                          
  ptweets = tweetsdf[tweetdf['result'] == 'Positive']
  posper = (100*len(ptweets)/len(tweets))
  st.write(f'Positive tweets {posper} %')
@@ -174,22 +127,23 @@ def run():
  nuper = (100 - posper - negper)
  st.write(f'Neutral tweets {nuper} %')
    
- st.dataframe(tweetsdf)
- tweetsdf[['tweets','tweets(cleaned)','result']].st.dataframe()
+ st.dataframe(tweetsdf[['date','username','tweet','result]])
+ 
  wcloud = st.checkbox(label='Generate word cloud')
 
- twt = " ".join(df['clean_tweets'])
+ twt = " ".join(tweetsdf['tweets(cleaned)'])
  wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
 
  if wcloud:
+   plt.figure(1,figsize=(8, 8))
+   plt.axis('off')
+   plt.imshow(wordcloud)
    plt.show()
    st.pyplot(wordcloud)
  else:
     pass
 
- plt.figure(1,figsize=(8, 8))
- plt.axis('off')
- plt.imshow(wordcloud)
+
 
 if submit:
     run()
