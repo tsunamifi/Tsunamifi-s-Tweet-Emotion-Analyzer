@@ -102,20 +102,27 @@ def get_tweets(search_query, max_results):
     # The tweet.fields query parameters [attachments,author_id,context_annotations,conversation_id,created_at,entities,
     # geo,id,in_reply_to_user_id,lang,non_public_metrics,organic_metrics,possibly_sensitive,promoted_metrics,public_metrics,
     # referenced_tweets,reply_settings,source,text,withheld]
-    collected_tweets = client.search_recent_tweets(query=search_query, tweet_fields=['conversation_id', 'created_at',
-                                                       'author_id'], max_results=max_results)
-    for tweet in collected_tweets:
-        parsed_tweet = tweet.text
-        clean_tweet = cleanup(parsed_tweet)
-        stem_tweet = TextBlob(root(clean_tweet))
-        scored_tweet = get_tweet_score(stem_tweet)
-        tweets.append((parsed_tweet, clean_tweet, scored_tweet))
-        return tweets  
+    collected_tweets = client.search_recent_tweets(query=search_query, tweet_fields=['conversation_id', 'created_at','author_id'], max_results=max_results)
+    tweets = get_tweets(search_query=texti, max_results=numberi)
+        
+    df = pd.DataFrame(tweets, columns= ['created_at', 'username', 'tweets', 'result'])
+
+ ### dropping duplicate tweets too..
+ 
+  df["tweetsC"] = df["tweets"].apply(cleanup) 
+  df["tweetsC"] = df["tweets"].apply(root)
+  df = df.drop_duplicates(subset='tweetsC')
+  df.to_csv('tweetbank.csv', index= False)
+      
+  # lets find out the cleaned tweets' emotion!
+  df["polarity"] = df["tweetsC"].apply(lambda x: TextBlob(x).sentiment[0]) 
+  df["result"] = df["polarity"].apply(lambda x: 'Positive' if x > 0 else('negative' if x<0 else 'neutral'))
+ 
 
 
 
 
-tweets = get_tweets(search_query=texti, max_results=numberi)
+
 
 def print():
   for data in result.data:
@@ -140,11 +147,7 @@ def print():
           #f"Public metrics: {public_metrics}\n",
           #f"Source: {source}")
     # print("-" * 80)     
-    df = pd.DataFrame(tweets, columns= ['created_at', 'username', 'tweets', 'result'])
-
- ### dropping duplicate tweets too..
-    df = df.drop_duplicates(subset='tweetsc')
-    df.to_csv('tweetbank.csv', index= False)
+    
 
     ptweets = df[df['result'] == 'positive']
     posper = (100*len(ptweets)/len(tweets))
