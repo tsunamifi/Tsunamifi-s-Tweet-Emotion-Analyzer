@@ -143,36 +143,37 @@ def print():
     df = pd.DataFrame(tweets, columns= ['created_at', 'username', 'tweets', 'result'])
 
  ### dropping duplicate tweets too..
- df = df.drop_duplicates(subset='tweetsc')
- df.to_csv('tweetbank.csv', index= False)
+    df = df.drop_duplicates(subset='tweetsc')
+    df.to_csv('tweetbank.csv', index= False)
 
- ptweets = df[df['result'] == 'positive']
- posper = (100*len(ptweets)/len(tweets))
- st.write(f'Positive tweets {posper} %')
+    ptweets = df[df['result'] == 'positive']
+    posper = (100*len(ptweets)/len(tweets))
+    st.write(f'Positive tweets {posper} %')
   
- ntweets = df[df['result'] == 'negative']
- negper = (100*len(ntweets)/len(tweets))
- st.write(f'Negative tweets {negper} %')
+    ntweets = df[df['result'] == 'negative']
+    negper = (100*len(ntweets)/len(tweets))
+    st.write(f'Negative tweets {negper} %')
        
- nuper = (100 - posper - negper)
- st.write(f'Neutral tweets {nuper} %')
+    nuper = (100 - posper - negper)
+    st.write(f'Neutral tweets {nuper} %')
    
- st.dataframe(df)
+    st.dataframe(df)
 
- wcloud = st.checkbox(label='Generate word cloud')
+    wcloud = st.checkbox(label='Generate word cloud')
 
- twt = " ".join(df['tweetsc'])
- wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
+    twt = " ".join(df['tweetsc'])
+    wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
 
- if wcloud:
-   plt.show()
-   st.pyplot(wordcloud)
- else:
-    pass
+    if wcloud:
+      plt.show()
+      plt.figure(1,figsize=(8, 8))
+      plt.axis('off')
+      plt.imshow(wordcloud)
+      st.pyplot(wordcloud)
+    else:
+      pass
 
- plt.figure(1,figsize=(8, 8))
- plt.axis('off')
- plt.imshow(wordcloud)
+ 
 
 
 # Take off...
