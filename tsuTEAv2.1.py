@@ -63,20 +63,20 @@ with st.form(key='vars'):
 class TEA:
 
   def __init__(self):
-    c = twint.Config()
-    c.Search = texti
-    c.Limit = numberi
-    c.Pandas = True
-    c.Lang = "en"
+    
+c = twint.Config()
+c.Search = texti
+c.Limit = numberi
+c.Pandas = True
+c.Lang = "en"
 
-    #compatibility for twint
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
+#compatibility for twint
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
 
-    twint.run.Search(c)
-   
-    tweetsdf = twint.storage.panda.Tweets_df
-    return tweetsdf
+twint.run.Search(c)
+tweetsdf = twint.storage.panda.Tweets_df
+return tweetsdf
 
 
   # this will clean unnecessary and maybe complicated things out of a tweet
@@ -120,14 +120,11 @@ class TEA:
   # lets find out the cleaned tweets' emotion!
   tweetsdf["polarity"] = tweetsdf["tweetsC"].apply(lambda x: TextBlob(x).sentiment[0]) 
   tweetsdf["result"] = tweetsdf["polarity"].apply(lambda x: 'Positive' if x > 0 else('negative' if x<0 else 'neutral'))
-              
-  asyncio.set_event_loop(asyncio.new_event_loop())
+
 
   # Take off...        
   def run(self):
-
-   loop = asyncio.new_event_loop()
-   asyncio.set_event_loop(loop)                                         
+                                      
    ptweets = tweetsdf[tweetdf['result'] == 'Positive']
    posper = (100*len(ptweets)/len(tweets))
    st.write(f'Positive tweets {posper} %')
