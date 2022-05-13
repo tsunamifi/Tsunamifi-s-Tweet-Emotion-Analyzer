@@ -62,7 +62,7 @@ with st.form(key='vars'):
 
 class TEA:
 
-def __init__(self):
+  def __init__(self):
     c = twint.Config()
     c.Search = texti
     c.Limit = numberi
