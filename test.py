@@ -106,7 +106,7 @@ def fetch_tweets(search_query, max_results = 50):
     
     collected_tweets = client.search_recent_tweets(query=search_query, max_results=20)
     for tweet in collected_tweets:
-        parsed_tweet = tweet.text
+        parsed_tweet = tweet.full_text
         clean_tweet = cleanup(parsed_tweet)
         stem_tweet = TextBlob(root(clean_tweet))
         scored_tweet = get_tweet_score(stem_tweet)
