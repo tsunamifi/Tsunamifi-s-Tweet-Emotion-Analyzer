@@ -59,31 +59,33 @@ with st.form(key='vars'):
         texti = st.text_input(label='Choose topic')
         numberi = st.number_input(label= 'How many tweets should we source?')
         submit = st.form_submit_button(label='Submit')
-global tweetsdf
-def searchseq():        
-  c = twint.Config()
-  c.Search = texti
-  c.Limit = numberi
-  c.Pandas = True
-  c.Lang = "en"
 
-#compatibility for twint
-  loop = asyncio.new_event_loop()
-  asyncio.set_event_loop(loop)
+class TEA
 
-  twint.run.Search(c)
+def __init__(self):
+    c = twint.Config()
+    c.Search = texti
+    c.Limit = numberi
+    c.Pandas = True
+    c.Lang = "en"
+
+    #compatibility for twint
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+    twint.run.Search(c)
    
-  tweetsdf = twint.storage.panda.Tweets_df
-  return tweetsdf
+    tweetsdf = twint.storage.panda.Tweets_df
+    return tweetsdf
 
 
-# this will clean unnecessary and maybe complicated things out of a tweet
-# like links or #'s 
-def cleanup(text):
+  # this will clean unnecessary and maybe complicated things out of a tweet
+  # like links or #'s 
+  def cleanup(self, text):
 
-     ## replaces all letters and numbers associated with chars like "\/:"
-     ## (which are chars used in links) with spaces which removes them.
-     ## we're also tokenizing each word here
+       ## replaces all letters and numbers associated with chars like "\/:"
+       ## (which are chars used in links) with spaces which removes them.
+       ## we're also tokenizing each word here
         
       parsed_tweet = text
       
@@ -95,63 +97,63 @@ def cleanup(text):
       text = ' '.join(text)
       return text
 
-# here we're getting rid of parts of words that dont mean anything
-# in sentiment analysis so we'll end up with just scoring rootwords
-def root(text):
+  # here we're getting rid of parts of words that dont mean anything
+  # in sentiment analysis so we'll end up with just scoring rootwords
+  def root(self, text):
 
-   porter = PorterStemmer()
-   token_words = word_tokenize(text)
-   root_sentence = []
-   for word in token_words:
-      root_sentence.append(porter.stem(word))
-   return " ".join(root_sentence)
+     porter = PorterStemmer()
+     token_words = word_tokenize(text)
+     root_sentence = []
+     for word in token_words:
+        root_sentence.append(porter.stem(word))
+     return " ".join(root_sentence)
 
-# dropping duplicate tweets & then cleaning them too.. 
-tweetsdf = tweetsdf.drop_duplicates(subset=['date', 'tweet'])
-tweetsdf.reset_index(inplace=True)
-tweetsdf.drop("index",axis =1,inplace=True) 
+  # dropping duplicate tweets & then cleaning them too.. 
+  tweetsdf = tweetsdf.drop_duplicates(subset=['date', 'tweet'])
+  tweetsdf.reset_index(inplace=True)
+  tweetsdf.drop("index",axis =1,inplace=True) 
               
-tweetsdf["tweetsC"] = tweetsdf["tweet"].apply(cleanup) 
-tweetsdf["tweetsC"] = tweetsdf["tweet"].apply(root)
+  tweetsdf["tweetsC"] = tweetsdf["tweet"].apply(cleanup) 
+  tweetsdf["tweetsC"] = tweetsdf["tweet"].apply(root)
 
       
-# lets find out the cleaned tweets' emotion!
-tweetsdf["polarity"] = tweetsdf["tweetsC"].apply(lambda x: TextBlob(x).sentiment[0]) 
-tweetsdf["result"] = tweetsdf["polarity"].apply(lambda x: 'Positive' if x > 0 else('negative' if x<0 else 'neutral'))
+  # lets find out the cleaned tweets' emotion!
+  tweetsdf["polarity"] = tweetsdf["tweetsC"].apply(lambda x: TextBlob(x).sentiment[0]) 
+  tweetsdf["result"] = tweetsdf["polarity"].apply(lambda x: 'Positive' if x > 0 else('negative' if x<0 else 'neutral'))
               
-asyncio.set_event_loop(asyncio.new_event_loop())
+  asyncio.set_event_loop(asyncio.new_event_loop())
 
-# Take off...        
-def run():
+  # Take off...        
+  def run(self):
 
- loop = asyncio.new_event_loop()
- asyncio.set_event_loop(loop)                                         
- ptweets = tweetsdf[tweetdf['result'] == 'Positive']
- posper = (100*len(ptweets)/len(tweets))
- st.write(f'Positive tweets {posper} %')
+   loop = asyncio.new_event_loop()
+   asyncio.set_event_loop(loop)                                         
+   ptweets = tweetsdf[tweetdf['result'] == 'Positive']
+   posper = (100*len(ptweets)/len(tweets))
+   st.write(f'Positive tweets {posper} %')
   
- ntweets = tweetsdf[tweetdf['result'] == 'Negative']
- negper = (100*len(ntweets)/len(tweets))
- st.write(f'Negative tweets {negper} %')
+   ntweets = tweetsdf[tweetdf['result'] == 'Negative']
+   negper = (100*len(ntweets)/len(tweets))
+   st.write(f'Negative tweets {negper} %')
        
- nuper = (100 - posper - negper)
- st.write(f'Neutral tweets {nuper} %')
+   nuper = (100 - posper - negper)
+   st.write(f'Neutral tweets {nuper} %')
    
- st.dataframe(tweetsdf[['date','username','tweet','result']])
+   st.dataframe(tweetsdf[['date','username','tweet','result']])
  
- wcloud = st.checkbox(label='Generate word cloud')
+   wcloud = st.checkbox(label='Generate word cloud')
 
- twt = " ".join(tweetsdf['tweetsC'])
- wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
+   twt = " ".join(tweetsdf['tweetsC'])
+   wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
 
- if wcloud:
-   plt.figure(1,figsize=(8, 8))
-   plt.axis('off')
-   plt.imshow(wordcloud)
-   plt.show()
-   st.pyplot(wordcloud)
- else:
-    pass
+   if wcloud:
+     plt.figure(1,figsize=(8, 8))
+     plt.axis('off')
+     plt.imshow(wordcloud)
+     plt.show()
+     st.pyplot(wordcloud)
+   else:
+      pass
 
 
 
