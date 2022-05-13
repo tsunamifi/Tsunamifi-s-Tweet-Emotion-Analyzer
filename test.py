@@ -38,10 +38,8 @@ from IPython.display import display
 st.set_page_config(layout="wide")
 st.title("Tsunamifi's Twitter Sentiment Analysis Bot")
 st.write("This WebAPP will allow you to plug in a topic from twitter and determine if their tweets are Positive, Negative or Neutral.")
-import tweepy
 
 # defining twitter auth setup here!
- import tweepy
 # from config import bearer_token
 
 
