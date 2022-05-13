@@ -104,7 +104,7 @@ def get_tweets(search_query, max_results):
     # referenced_tweets,reply_settings,source,text,withheld]
     collected_tweets = client.search_recent_tweets(query=search_query, tweet_fields=['conversation_id', 'created_at','author_id'], max_results=max_results)
     tweets = get_tweets(search_query=texti, max_results=numberi)
-        
+    return collected_tweets
     df = pd.DataFrame(tweets, columns= ['created_at', 'username', 'tweets', 'result'])
 
  ### dropping duplicate tweets too..
