@@ -25,6 +25,8 @@ import pandas as pd
 
 import asyncio
 
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
 ### matplot helps us visualize data too.
 import matplotlib.pyplot as plt
 
@@ -65,7 +67,8 @@ c.Pandas = True
 c.Lang = "en"
 
 #compatibility for twint
-asyncio.set_event_loop(asyncio.new_event_loop())
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
 
 twint.run.Search(c)
    
@@ -119,7 +122,9 @@ asyncio.set_event_loop(asyncio.new_event_loop())
 
 # Take off...        
 def run():
- asyncio.set_event_loop(asyncio.new_event_loop())                                         
+
+ loop = asyncio.new_event_loop()
+ asyncio.set_event_loop(loop)                                         
  ptweets = tweetsdf[tweetdf['result'] == 'Positive']
  posper = (100*len(ptweets)/len(tweets))
  st.write(f'Positive tweets {posper} %')
