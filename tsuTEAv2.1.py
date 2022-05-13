@@ -103,6 +103,7 @@ def root(text):
 tweetsdf = tweetsdf.drop_duplicates(subset=['date', 'tweet'])
 tweetsdf.reset_index(inplace=True)
 tweetsdf.drop("index",axis =1,inplace=True  
+              
 tweetsdf['tweetsC'] = tweetsdf['tweet'].apply(cleanup)] 
 tweetsdf['tweetsC'] = tweetsdf['tweet'].apply(root)] 
 
