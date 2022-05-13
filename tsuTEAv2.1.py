@@ -128,11 +128,11 @@ def run():
  nuper = (100 - posper - negper)
  st.write(f'Neutral tweets {nuper} %')
    
- st.dataframe(tweetsdf[['date','username','tweet','result]])
+ st.dataframe(tweetsdf[['date','username','tweet','result']])
  
  wcloud = st.checkbox(label='Generate word cloud')
 
- twt = " ".join(tweetsdf['tweets(cleaned)'])
+ twt = " ".join(tweetsdf['tweetsC'])
  wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
 
  if wcloud:
