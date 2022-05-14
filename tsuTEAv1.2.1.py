@@ -39,6 +39,8 @@ from nltk.stem import PorterStemmer
 ### textblob is a text processing library.
 import re
 import tweepy
+from tweepy.tweet import Tweet
+from tweepy.user import User
 from tweepy import OAuthHandler
 from textblob import TextBlob
 
@@ -120,15 +122,13 @@ def fetch_tweets(query, count = 50):
       collected_tweets = api.search(q = query + ' -filter:retweets', count = 100)
 
       for tweet in collected_tweets:
-        parsed_tweet = tweet.text
+        parsed_tweet = Tweet.text
         clean_tweet = cleanup(parsed_tweet)
         stem_tweet = TextBlob(root(clean_tweet))
         scored_tweet = get_tweet_score(stem_tweet)
         tweets.append((parsed_tweet, clean_tweet, scored_tweet))
         return tweets
-    except tweepy.TweepError as e:
-      print("Error : " + str(e))
-      exit(1)
+    
 
 st.title("Choose Topic on twitter to analyze")
 #st.write("You're welcome to use both a user and topic but both at the same time are not required, you can use one or the other too if you'd like.")
