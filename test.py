@@ -136,7 +136,14 @@ def print():
           #f"Public metrics: {public_metrics}\n",
           #f"Source: {source}")
     # print("-" * 80)     
-    df = pd.DataFrame(result, columns= ['created_at', 'username', 'tweets', 'results'])
+    tweets_dict = tweets.json() 
+
+# Extract "data" value from dictionary
+    tweets_data = tweets_dict['data'] 
+
+# Transform to pandas Dataframe
+    df = pd.json_normalize(tweets_data, columns= ['created_at', 'username', 'tweets', 'results'])
+        
 
   
  ### dropping duplicate tweets too..
