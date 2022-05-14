@@ -127,7 +127,7 @@ def fetch_tweets(query, count = 50):
         stem_tweet = TextBlob(root(clean_tweet))
         scored_tweet = get_tweet_score(stem_tweet)
         tweets.append((parsed_tweet, clean_tweet, scored_tweet))
-  return tweets
+    return tweets
     
 
 st.title("Choose Topic on twitter to analyze")
