@@ -141,9 +141,7 @@ def print():
           #f"Source: {source}")
     # print("-" * 80)   
    # df = pd.json_normalize(tweets_data, columns= ['created_at', 'username', 'tweets', 'results'])
-    df = pd.DataFrame([tweet for tweet in tweets],
-                             columns=["tweet_id", "tweet_date", "tweet_username", "tweet_text"])
-df
+    df = pd.DataFrame([tweet for tweet in tweets], columns=["tweet_id", "tweet_date", "tweet_username", "tweet_text"])
 
   
  ### dropping duplicate tweets too..
