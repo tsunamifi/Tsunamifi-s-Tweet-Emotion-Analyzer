@@ -98,13 +98,17 @@ def get_username(user_id):
 
 
 def get_tweets(search_query, max_results):
-    
+    tweets = []
+
+
     # The tweet.fields query parameters [attachments,author_id,context_annotations,conversation_id,created_at,entities,
     # geo,id,in_reply_to_user_id,lang,non_public_metrics,organic_metrics,possibly_sensitive,promoted_metrics,public_metrics,
     # referenced_tweets,reply_settings,source,text,withheld]
-    result = client.search_recent_tweets(query=search_query, tweet_fields=['conversation_id', 'created_at','author_id'], max_results=max_results)
-    
-    return result
+    result = tweepy.Cursor(client.search_recent_tweets, query=search_query, tweet_fields=['conversation_id', 'created_at','author_id'], max_results=max_results)
+    tweets = list(result.items(20))
+    for tweet in tweets:
+    tweets.append((tweet.id, tweet.created_at, tweet.author.screen_name, tweet.text))
+    return tweets
 
  
 
@@ -135,15 +139,11 @@ def print():
           #f"Tweet: {tweet}\n"
           #f"Public metrics: {public_metrics}\n",
           #f"Source: {source}")
-    # print("-" * 80)     
-    tweets_dict = tweets.json() 
-
-# Extract "data" value from dictionary
-    tweets_data = tweets_dict['data'] 
-
-# Transform to pandas Dataframe
-    df = pd.json_normalize(tweets_data, columns= ['created_at', 'username', 'tweets', 'results'])
-        
+    # print("-" * 80)   
+   # df = pd.json_normalize(tweets_data, columns= ['created_at', 'username', 'tweets', 'results'])
+    df = pd.DataFrame([tweet for tweet in tweets],
+                             columns=["tweet_id", "tweet_date", "tweet_username", "tweet_text"])
+df
 
   
  ### dropping duplicate tweets too..
