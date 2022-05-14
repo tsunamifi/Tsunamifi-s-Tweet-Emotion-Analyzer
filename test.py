@@ -107,7 +107,7 @@ def get_tweets(search_query, max_results):
     result = tweepy.Cursor(client.search_recent_tweets, query=search_query, tweet_fields=['conversation_id', 'created_at','author_id'], max_results=max_results)
     tweets = list(result.items(20))
     for tweet in tweets:
-    tweets.append((tweet.id, tweet.created_at, tweet.author.screen_name, tweet.text))
+      tweets.append((tweet.id, tweet.created_at, tweet.author.screen_name, tweet.text))
     return tweets
 
  
