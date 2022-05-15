@@ -56,7 +56,7 @@ with st.form(key='vars'):
         numberi = st.number_input(label= 'How many tweets should we source?', step=1, value=15)
         submit = st.form_submit_button(label='Submit')
 
-load = st.spinner('Collecting Tweets...'):
+load = st.spinner('Collecting Tweets...')
     
 
 
