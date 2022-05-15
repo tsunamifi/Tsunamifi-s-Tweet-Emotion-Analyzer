@@ -118,17 +118,17 @@ def fetch_tweets(query, count = 50):
     ### empty list to hold tweets
     tweets = []  
 
-    try:
-      collected_tweets = api.search(q = query + ' -filter:retweets', count = 100)
 
-      for tweet in collected_tweets:
+    collected_tweets = api.search(q = query + ' -filter:retweets', count = 100)
+
+    for tweet in collected_tweets:
         parsed_tweet = Tweet.text
         clean_tweet = cleanup(parsed_tweet)
         stem_tweet = TextBlob(root(clean_tweet))
         scored_tweet = get_tweet_score(stem_tweet)
         tweets.append((parsed_tweet, clean_tweet, scored_tweet))
         
-      return tweets
+    return tweets
     
 
 st.title("Choose Topic on twitter to analyze")
