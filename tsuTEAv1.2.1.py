@@ -39,8 +39,8 @@ from nltk.stem import PorterStemmer
 ### textblob is a text processing library.
 import re
 import tweepy
-from tweepy.tweet import Tweet
-from tweepy.user import User
+#from tweepy.tweet import Tweet
+#from tweepy.user import User
 from tweepy import OAuthHandler
 from textblob import TextBlob
 
