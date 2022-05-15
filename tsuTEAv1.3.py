@@ -152,7 +152,7 @@ def run():
 
  ### stuff our collected tweets in to a pandas dataframe
  ### and also specifying which columns.
- df = pd.DataFrame(tweets, columns= ['Tweets', 'Result'])
+ df = pd.DataFrame(tweets, columns= ['Tweets', 'Scrubbed Tweets', 'Result'])
 
  ### dropping duplicate tweets too..
  df = df.drop_duplicates(subset='clean_tweets')
