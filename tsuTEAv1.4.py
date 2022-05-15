@@ -79,7 +79,7 @@ def auth():
       api = tweepy.API(auth)
       return api
     except:
-      print("Error: Authentification Failed, try again?")
+      st.error("Error: Authentification Failed, try again?")
       exit(1)
 
 ## this will clean unnecessary and maybe complicated things out of a tweet
@@ -178,10 +178,10 @@ def run():
  twt = " ".join(df['Scrubbed Tweets'])
  wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
  plt.show()
- plt.figure(1,figsize=(8, 8))
+ fig = plt.figure(1,figsize=(8, 8))
  plt.axis('off')
  plt.imshow(wordcloud)
- st.pyplot(wordcloud)
+ st.pyplot(fig)
     
 ## loading spinner, why because its cute.    
 def spin():
