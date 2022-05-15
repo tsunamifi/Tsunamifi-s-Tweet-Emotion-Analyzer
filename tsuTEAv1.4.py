@@ -175,7 +175,7 @@ def run():
     
  ### generate wordcloud
  twt = " ".join(df['Scrubbed Tweets'])
- wordcloud = WordCloud(stopwords=STOPWORDS, background_color='white', width=2000, height=1500).generate(twt)
+ wordcloud = WordCloud(stopwords=STOPWORDS, background_color='white', width=2000, height=2200).generate(twt)
  plt.show()
  fig = plt.figure(1,figsize=(8, 8))
  plt.axis('off')
@@ -186,7 +186,7 @@ def run():
         st.caption('Here is our data for reference')
         st.dataframe(df)
  with col5:
-    st.caption(f' Here are the words most commonly association with {texti}')
+    st.caption(f' Here are the words most commonly associated with {texti}')
     st.pyplot(fig)
  st.success('Done!')
 
