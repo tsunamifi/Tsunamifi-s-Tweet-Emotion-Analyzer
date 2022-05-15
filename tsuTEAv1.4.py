@@ -190,7 +190,7 @@ def spin():
     st.success("Done!")
 
 if submit:
-    spin()
+  spin()
   try:  
     run()
   except tweepy.TweepError as e:
