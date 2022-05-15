@@ -188,13 +188,13 @@ def run():
  with col5:
     st.caption(f' Here are the words most commonly association with {texti}')
     st.pyplot(fig)
-    
+ st.success('Done!')
+
 ## loading spinner, why because its cute.    
 def spin():
   with st.spinner('Collecting tweets...'):
     time.sleep(3)
-    st.success("Done!")
-
+    
 if submit:
   spin()
   try:  
