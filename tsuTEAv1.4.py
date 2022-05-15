@@ -191,6 +191,9 @@ def spin():
 
 if submit:
     spin()
+  try:  
     run()
+  except tweepy.TweepError as e:
+    st.error("There's something afoot... looks like " f'{e}')
 else:
     pass
