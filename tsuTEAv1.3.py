@@ -9,7 +9,7 @@ Original file is located at
 # Tsunamifi's Twitter Sentiment Analysis Bot
 This notebook will allow you to plug in a user OR topic from twitter and determine if their tweets are Positive, Negative or Neutral.
 
-Why? for fun, probably.
+Why? for fun, probably."""
 
 #core setup.
 
