@@ -155,7 +155,7 @@ def run():
  df = pd.DataFrame(tweets, columns= ['Tweets', 'Scrubbed Tweets', 'Result'])
 
  ### dropping duplicate tweets too..
- df = df.drop_duplicates(subset='clean_tweets')
+ df = df.drop_duplicates(subset='Scrubbed Tweets')
  df.to_csv('tweetbank.csv', index= False)
 
  ptweets = df[df['Result'] == 'positive']
@@ -175,7 +175,7 @@ def run():
 
  wcloud = st.checkbox(label='Generate word cloud')
 
- twt = " ".join(df['clean_tweets'])
+ twt = " ".join(df['Scrubbed Tweets'])
  wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
 
  if wcloud:
