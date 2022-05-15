@@ -185,7 +185,7 @@ def run():
     
 ## loading spinner, why because its cute.    
 def spin():
-  with st.spinner('Collecting Tweets...')
+  with st.spinner('Collecting Tweets...'):
     time.sleep(5)
     st.success("Done!")
 
