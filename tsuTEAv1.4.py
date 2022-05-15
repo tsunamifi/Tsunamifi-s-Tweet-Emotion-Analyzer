@@ -47,7 +47,7 @@ import time
 
 # streamlit formatting
 st.set_page_config(layout="wide")
-st.title("Tsunamifi's Twitter Sentiment Analysis Bot")
+st.title("Twitter Sentiment Analysis Bot")
 st.write("This WebAPP will allow you to plug in a topic from twitter and determine if the general discussion is positive, negative or neutral.")
 st.title("Choose Topic on twitter to analyze")
 
@@ -172,21 +172,25 @@ def run():
  col1.metric('Positive Tweets', f'{posper}%')
  col2.metric('Negative Tweets', f'{negper}%')
  col3.metric('Neutral Tweets', f'{nuper}%') 
- st.dataframe(df)
-  
+    
  ### generate wordcloud
  twt = " ".join(df['Scrubbed Tweets'])
- wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
+ wordcloud = WordCloud(stopwords=STOPWORDS, background_color='white', width=2000, height=1500).generate(twt)
  plt.show()
  fig = plt.figure(1,figsize=(8, 8))
  plt.axis('off')
- plt.imshow(wordcloud)
- st.pyplot(fig)
+ plt.imshow(wordcloud)   
+    
+ col4, col5 = st.columns(2)   
+ with col4:
+        st.table(df)
+ with col5:
+    st.pyplot(fig)
     
 ## loading spinner, why because its cute.    
 def spin():
-  with st.spinner('Collecting Tweets...'):
-    time.sleep(5)
+  with st.spinner('Collecting tweets...'):
+    time.sleep(3)
     st.success("Done!")
 
 if submit:
