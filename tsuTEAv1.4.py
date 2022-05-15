@@ -175,7 +175,7 @@ def run():
     
  ### generate wordcloud
  twt = " ".join(df['Scrubbed Tweets'])
- wordcloud = WordCloud(stopwords=STOPWORDS, background_color='white', width=2000, height=2200).generate(twt)
+ wordcloud = WordCloud(stopwords=STOPWORDS, background_color='white', width=2000, height=2000).generate(twt)
  plt.show()
  fig = plt.figure(1,figsize=(8, 8))
  plt.axis('off')
