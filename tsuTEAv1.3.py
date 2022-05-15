@@ -168,9 +168,9 @@ def run():
  
  st.write("Here's the overall climate concerning" + texti)
  col1, col2, col3 = st.columns(3)
- col1.metric(f'Positive Tweets', '{posper}%')
- col2.metric(f'Negative Tweets', '{negper}%')
- col3.metric(f'Neutral Tweets', '{nuper}%') 
+ col1.metric('Positive Tweets', f'{posper}%')
+ col2.metric('Negative Tweets', f'{negper}%')
+ col3.metric('Neutral Tweets', f'{nuper}%') 
  st.dataframe(df)
 
     
