@@ -77,7 +77,7 @@ def cleanup(text):
      ## replaces all letters and numbers associated with chars like "\/:"
      ## (which are chars used in links) with spaces which removes them.
      ## we're also tokenizing each word here
-      text = text.lower()
+      
       text = re.sub('(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)', ' ', text)
   
       text_tokens = word_tokenize(text)
@@ -140,7 +140,7 @@ st.title("Choose Topic on twitter to analyze")
 
 with st.form(key='vars'):
         texti = st.text_input(label='Choose topic')
-        numberi = st.number_input(label= 'How many tweets should we source?')
+        numberi = st.number_input(label= 'How many tweets should we source?', step=1)
         submit = st.form_submit_button(label='Submit')
         
 def run():
