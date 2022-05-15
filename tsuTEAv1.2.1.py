@@ -119,9 +119,9 @@ def fetch_tweets(query, count = 50):
     tweets = []  
 
 
-    collected_tweets = api.search_tweets(q = query + ' -filter:retweets', count = 100)
+    collected_tweets = api.search(q = query + ' -filter:retweets', count = 100)
 
-    for tweet in collected_tweets:
+    for Tweet in collected_tweets:
         parsed_tweet = Tweet.text
         clean_tweet = cleanup(parsed_tweet)
         stem_tweet = TextBlob(root(clean_tweet))
