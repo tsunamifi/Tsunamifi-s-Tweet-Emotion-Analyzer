@@ -37,13 +37,13 @@ from nltk.stem import PorterStemmer
 
 ### tweepy is the official twitter python library/api; this is how we'll be able to source our tweets.
 ### textblob is a text processing library.
-import re
 import tweepy
 from tweepy import OAuthHandler
 from textblob import TextBlob
 
-
-
+### MISC
+import re
+import time
 
 # streamlit formatting
 st.set_page_config(layout="wide")
@@ -56,12 +56,8 @@ with st.form(key='vars'):
         numberi = st.number_input(label= 'How many tweets should we source?', step=1, value=15)
         submit = st.form_submit_button(label='Submit')
 
-with st.spinner('Collecting Tweets...'):
-    if submit:
-       time.sleep(5)
-    else:
-        pass
-st.success('Done!')
+load = st.spinner('Collecting Tweets...'):
+    
 
 
 
@@ -193,6 +189,8 @@ def run():
 
 
 if submit:
+    {load}
     run()
+    st.success("Done!")
 else:
     pass
