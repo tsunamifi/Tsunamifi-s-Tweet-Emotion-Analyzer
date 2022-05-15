@@ -182,13 +182,13 @@ def run():
  twt = " ".join(df['clean_tweets'])
  wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
 
-if wcloud:
+ if wcloud:
       plt.show()
       plt.figure(1,figsize=(8, 8))
       plt.axis('off')
       plt.imshow(wordcloud)
       st.pyplot(wordcloud)
-    else:
+ else:
       pass
 
 
