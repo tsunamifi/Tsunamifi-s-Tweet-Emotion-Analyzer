@@ -183,8 +183,10 @@ def run():
     
  col4, col5 = st.columns(2)   
  with col4:
-        st.table(df)
+        st.caption('Here is our data for reference')
+        st.dataframe(df)
  with col5:
+    st.caption(f' Here are the words most commonly association with {texti}')
     st.pyplot(fig)
     
 ## loading spinner, why because its cute.    
