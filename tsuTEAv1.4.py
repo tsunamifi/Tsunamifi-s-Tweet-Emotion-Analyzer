@@ -56,7 +56,7 @@ with st.form(key='vars'):
         numberi = st.number_input(label= 'How many tweets should we source?', step=1, value=15)
         submit = st.form_submit_button(label='Submit')
 
-load = st.spinner('Collecting Tweets...')
+
     
 
 
@@ -158,6 +158,7 @@ def run():
  df = df.drop_duplicates(subset='Scrubbed Tweets')
  df.to_csv('tweetbank.csv', index= False)
 
+ ### calculate and display total percentages
  ptweets = df[df['Result'] == 'positive']
  posper = (100*len(ptweets)/len(tweets))
   
@@ -165,36 +166,31 @@ def run():
  negper = (100*len(ntweets)/len(tweets))
        
  nuper = (100 - posper - negper)
- 
- st.write("Here's the overall climate concerning" + texti)
+    
+ st.write("Here's the overall climate concerning " + texti)
  col1, col2, col3 = st.columns(3)
  col1.metric('Positive Tweets', f'{posper}%')
  col2.metric('Negative Tweets', f'{negper}%')
  col3.metric('Neutral Tweets', f'{nuper}%') 
  st.dataframe(df)
-
+  
+ ### generate wordcloud
+ twt = " ".join(df['Scrubbed Tweets'])
+ wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
+ plt.show()
+ plt.figure(1,figsize=(8, 8))
+ plt.axis('off')
+ plt.imshow(wordcloud)
+ st.pyplot(wordcloud)
     
-## generate wordcloud 
-def GenWC():
-
-  twt = " ".join(df['Scrubbed Tweets'])
-  wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
-  plt.show()
-  plt.figure(1,figsize=(8, 8))
-  plt.axis('off')
-  plt.imshow(wordcloud)
-  st.pyplot(wordcloud)
- 
-  if wcloud:
-     GenWC()
-  else:
-      pass
-
+## loading spinner, why because its cute.    
+def spin():
+  with st.spinner('Collecting Tweets...')
+    time.sleep(5)
+    st.success("Done!")
 
 if submit:
-    load
-    wcloud = st.checkbox(label='Generate word cloud')
+    spin()
     run()
-    st.success("Done!")
 else:
     pass
