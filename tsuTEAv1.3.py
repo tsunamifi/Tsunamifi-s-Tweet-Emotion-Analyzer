@@ -166,30 +166,34 @@ def run():
        
  nuper = (100 - posper - negper)
  
- st.write("Here's the overall climate concerning {texti}")
+ st.write("Here's the overall climate concerning" + texti)
  col1, col2, col3 = st.columns(3)
- col1.metric("Positive Tweets", "{posper}%")
- col2.metric("Negative Tweets", "{negper}%")
- col3.metric("Neutral Tweets", "{nuper}%") 
+ col1.metric("Positive Tweets", + posper + "%")
+ col2.metric("Negative Tweets", + negper + "%")
+ col3.metric("Neutral Tweets", + nuper + "%") 
  st.dataframe(df)
 
- wcloud = st.checkbox(label='Generate word cloud')
+    
+## generate wordcloud 
+def GenWC():
 
- twt = " ".join(df['Scrubbed Tweets'])
- wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
-
- if wcloud:
-      plt.show()
-      plt.figure(1,figsize=(8, 8))
-      plt.axis('off')
-      plt.imshow(wordcloud)
-      st.pyplot(wordcloud)
- else:
+  twt = " ".join(df['Scrubbed Tweets'])
+  wordcloud = WordCloud(stopwords=STOPWORDS, background_color='black', width=2500, height=2000).generate(twt)
+  plt.show()
+  plt.figure(1,figsize=(8, 8))
+  plt.axis('off')
+  plt.imshow(wordcloud)
+  st.pyplot(wordcloud)
+ 
+  if wcloud:
+     GenWC()
+  else:
       pass
 
 
 if submit:
-    {load}
+    load
+    wcloud = st.checkbox(label='Generate word cloud')
     run()
     st.success("Done!")
 else:
